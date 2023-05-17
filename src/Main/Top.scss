@@ -1,0 +1,56 @@
+$color-primary-1: #3d55c0;
+$color-primary-2: #2f5cff;
+$color-white: #fff;
+$color-black: #000;
+
+.top {
+    width: 100%;
+    background-color: green;
+    height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // background-image: linear-gradient(to right, $color-primary-1, $color-primary-2);;
+}
+
+.swap{
+
+    &-card {
+        display: flex;
+        // background-color: #375bd2;
+        height: 70%;
+        align-items: center;
+        gap: 2rem;
+        padding: 1rem;
+        border-radius: 5px;
+        
+        & input {
+            width: 2rem;
+        }
+        
+        & input:focus {
+            outline: none;
+        }
+    } 
+}
+
+
+select{
+    width: 10rem;
+    height: 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: .5rem;
+    background-color: transparent;
+    box-shadow: 1px 1px .5px black;
+
+   &:hover {
+    cursor: pointer;
+   }
+}
+
+input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}

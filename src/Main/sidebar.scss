@@ -1,0 +1,27 @@
+$color-primary-1: #3d55c0;
+$color-primary-2: #2f5cff;
+$color-white: #fff;
+$color-black: #000;
+
+.sidebar {
+    width: 20vw;
+    height: 100vh;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-image: linear-gradient(to right, $color-primary-1, $color-primary-2);
+}
+
+.options {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 2rem;
+    gap: 2rem;
+    color: white;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
