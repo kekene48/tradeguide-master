@@ -5,12 +5,17 @@ $color-black: #000;
 
 .top {
     width: 100%;
-    background-color: green;
+    background-color: lightblue;
     height: 10vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    // background-image: linear-gradient(to right, $color-primary-1, $color-primary-2);;
+    // background-image: linear-gradient(to right, $color-primary-1, $color-primary-2);
+
+    &-btn {
+        width: 10rem;
+        border-radius: .5rem;
+    }
 }
 
 .swap{

@@ -1,6 +1,8 @@
 import React from "react";
 import { useRef } from "react";
 import "./Top.scss";
+import { AiOutlineSwap } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Top = () => {
   let targetValue1 = useRef("Link");
@@ -24,6 +26,17 @@ const Top = () => {
 
   return (
     <div className="top">
+      <Link
+        to="/"
+        className="app__top"
+        style={{ left: "-3rem", top: "-.5rem" }}
+      >
+        <div
+          className="app__logo"
+          style={{ width: "4rem", height: "4rem" }}
+        ></div>
+        <div className="app__title">Trade Guide</div>
+      </Link>
       <div className="swap-1 swap-card">
         <input type="text" placeholder="0" />
         <div className="custom-select">
@@ -39,6 +52,9 @@ const Top = () => {
             <option value="ETHEREUM">Ethereurm</option>
           </select>
         </div>
+      </div>
+      <div className="icon">
+        <AiOutlineSwap style={{ width: "2.5rem", height: "1.5rem" }} />
       </div>
       <div className="swap-2 swap-card">
         <input type="text" placeholder="0" />
@@ -56,6 +72,12 @@ const Top = () => {
           </select>
         </div>
       </div>
+      <button
+        className="btn btn-primary btn-lg top-btn"
+        onClick={() => console.log("swap successful")}
+      >
+        Swap
+      </button>
     </div>
   );
 };

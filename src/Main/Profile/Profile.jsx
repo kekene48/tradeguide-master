@@ -70,16 +70,16 @@ const Profile = () => {
                 >
                   <div className="d-flex justify-content-end text-center py-1">
                     <div>
-                      <p className="mb-1 h5">253</p>
-                      <p className="small text-muted mb-0">Photos</p>
+                      <p className="mb-1 h5">53</p>
+                      <p className="small text-muted mb-0">Posts</p>
                     </div>
                     <div className="px-3">
                       <p className="mb-1 h5">1026</p>
-                      <p className="small text-muted mb-0">Followers</p>
+                      <p className="small text-muted mb-0">Subscribers</p>
                     </div>
                     <div>
-                      <p className="mb-1 h5">478</p>
-                      <p className="small text-muted mb-0">Following</p>
+                      <p className="mb-1 h5">18</p>
+                      <p className="small text-muted mb-0">Subscribed</p>
                     </div>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ const Profile = () => {
                     Subscribe
                   </button>
                 </div>
-                <div className="d-flex justify-content-between text-center mt-5 mb-2">
+                <div className="d-flex justify-content-between text-center mt-5 mb-2 px-5">
                   <div>
                     <p className="mb-2 h5">8471</p>
                     <p className="text-muted mb-0">Wallets Balance</p>
@@ -143,7 +143,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      <Feed isOpen={isOpen} />
+      {isOpen ? <Feed isOpen={isOpen} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
     </>
   );

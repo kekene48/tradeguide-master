@@ -77,8 +77,8 @@ $color-black: #000;
     justify-content: center;
     align-items: center;
 
-    animation: Shake 1s ease-in-out;
-    transition-delay: 1s;
+    animation: Shake .5s ease-in-out;
+    transition-delay: .1s;
 
     &:hover {
       cursor: pointer;
@@ -150,6 +150,7 @@ $color-black: #000;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
+    border-radius: .4rem;
 
     &-p {
       font-size: 1.3rem;
@@ -162,6 +163,7 @@ $color-black: #000;
 
     &-h2 {
       text-align: center;
+      font-weight: bold;
     }
   }
 }
