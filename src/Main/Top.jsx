@@ -3,6 +3,7 @@ import { useRef } from "react";
 import "./Top.scss";
 import { AiOutlineSwap } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Top = () => {
   let targetValue1 = useRef("Link");
@@ -78,6 +79,9 @@ const Top = () => {
       >
         Swap
       </button>
+      <div style={{ }}>
+       <ConnectButton/>
+    </div>
     </div>
   );
 };

@@ -1,16 +1,17 @@
-import React from 'react'
+import React from "react";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import './index.scss';
-import Home from './Home/Home';
+import "./index.scss";
+import Home from "./Home/Home";
 // import Main from './Main/Main';
 // import Error from './Error'
 
 const App = () => {
   return (
     <>
-    <Home/>
+      {" "}
+      <Home />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
