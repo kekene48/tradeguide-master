@@ -9,6 +9,7 @@ const Trades = () => {
       <table className="styled-table">
         <thead>
           <tr>
+            <th>N/B</th>
             <th>Token</th>
             <th>Trader Id</th>
             <th>Buy</th>
@@ -19,6 +20,7 @@ const Trades = () => {
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -27,6 +29,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -35,6 +38,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -43,6 +47,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -51,6 +56,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -59,6 +65,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -67,6 +74,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>7</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -75,6 +83,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>8</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -83,6 +92,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>9</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>
@@ -91,6 +101,7 @@ const Trades = () => {
             <td>3.5%</td>
           </tr>
           <tr>
+            <td>10</td>
             <td>Ether</td>
             <td>Cecelia Ahern</td>
             <td>1300</td>

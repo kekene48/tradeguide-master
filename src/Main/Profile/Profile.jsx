@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "../Sidebar";
 import Feed from "../../Feeds/Feed";
 import Modale from "../Modal/Modal";
@@ -11,10 +11,13 @@ import Input from "../../Feeds/Input";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   let Open;
+
   const handleSubscribe = (e) => {
     setIsOpen(!isOpen);
-    Open = !isOpen;
+    setSubOpen(!subOpen);
+    Open = subOpen;
     if (Open) {
       e.currentTarget.innerText = "Unsubscribe";
     }
@@ -24,10 +27,18 @@ const Profile = () => {
     }
   };
 
+  Open = subOpen;
+
   return (
     <>
       <div style={{ display: "flex" }}>
-        <Sidebar />
+        <Sidebar
+          style={{
+            height: document.body.scrollHeight
+              ? `${document.body.scrollHeight}px`
+              : "",
+          }}
+        />
         {/* PROFILE STARTS HERE */}
         <div
           className="container py-5 h-100"
@@ -46,7 +57,7 @@ const Profile = () => {
                   >
                     <img
                       src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                      alt="Generic placeholder image"
+                      alt="Generic placeholder"
                       className="img-fluid img-thumbnail mt-4 mb-2"
                       style={{ width: "150px", zIndex: "1" }}
                     />
@@ -143,7 +154,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {isOpen ? <Feed isOpen={isOpen} /> : ""}
+      {Open ? <Feed /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
     </>
   );

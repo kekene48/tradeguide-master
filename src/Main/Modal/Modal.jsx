@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Modal.scss";
 import Modal from "react-overlays/Modal";
 
 const Modale = ({ isOpen, setIsOpen }) => {
-  // React state to control Modal visibility
-  const [showModal, setShowModal] = useState(false);
-
   // Backdrop JSX code
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
 
   const handleSuccess = () => {
     console.log("success");
+    setIsOpen(false);
   };
+
   return (
     <div className="modal-example">
       <Modal
@@ -30,26 +29,26 @@ const Modale = ({ isOpen, setIsOpen }) => {
             </div>
           </div>
           <div className="modal-desc">
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 value="subfee"
                 id="subfee"
               />
-              <label class="form-check-label" for="subfee">
+              <label className="form-check-label" htmlFor="subfee">
                 $89/month
               </label>
             </div>
 
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 value="mintnft"
                 id="mintnft"
               />
-              <label class="form-check-label" for="mintnft">
+              <label className="form-check-label" htmlFor="mintnft">
                 Mint NFT
               </label>
             </div>
@@ -57,13 +56,15 @@ const Modale = ({ isOpen, setIsOpen }) => {
           <div className="modal-footer">
             <button
               className="secondary-button"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen(false)}
             >
               Close
             </button>
             <button
               className="primary-button"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                handleSuccess();
+              }}
             >
               Save Changes
             </button>
