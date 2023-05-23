@@ -35,6 +35,7 @@ const Modale = ({ isOpen, setIsOpen }) => {
                 type="checkbox"
                 value="subfee"
                 id="subfee"
+                required
               />
               <label className="form-check-label" htmlFor="subfee">
                 $89/month
@@ -61,6 +62,7 @@ const Modale = ({ isOpen, setIsOpen }) => {
               Close
             </button>
             <button
+              type="submit"
               className="primary-button"
               onClick={() => {
                 handleSuccess();

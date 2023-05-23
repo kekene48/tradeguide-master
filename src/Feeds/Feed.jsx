@@ -15,9 +15,10 @@ const Feed = () => {
                   <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                     <div className="d-flex flex-row align-items-center feed-text px-2">
                       <img
-                        className="rounded-circle mr-4"
+                        className="rounded-circle"
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                         width="45"
+                        style={{ marginRight: "1rem" }}
                       />
                       <div className="d-flex flex-column flex-wrap ml-2">
                         <span className="font-weight-bold">Andy Horwitz</span>
@@ -50,8 +51,9 @@ const Feed = () => {
                   <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                     <div className="d-flex flex-row align-items-center feed-text px-2">
                       <img
-                        className="rounded-circle mr-4"
+                        className="rounded-circle"
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                        style={{ marginRight: "1rem" }}
                         width="45"
                       />
                       <div className="d-flex flex-column flex-wrap ml-2">

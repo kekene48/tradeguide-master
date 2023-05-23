@@ -1,0 +1,86 @@
+.swap {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 15%;
+    height: 300px;
+    background: lightblue;
+    width: 600px;
+    margin-top: 7%;
+    padding: 20px;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 2px black;
+    perspective: 10rem;
+
+    &-card {
+        display: flex;
+        // background-color: #375bd2;
+        width: 100%;
+        height: 70%;
+        align-items: center;
+        gap: 2rem;
+        padding: 1rem;
+        border-radius: 5px;
+        text-align: center;
+
+        & input {
+            width: 20%;
+            height: 2.5rem;
+            transform: translateX(4rem);
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &_inputs {
+        display: flex;
+        gap: 5rem;
+        margin-bottom: 2rem;
+
+        & > * > input {
+            border: 1.5px solid black;
+            border-radius: 4px;
+            height: 3rem;
+            text-align: center;
+        }
+    }
+
+    & > button {
+        width: 100%;
+        height: 7rem;
+    }
+}
+
+.custom-select {
+    width: 100%;
+}
+
+
+select {
+    width: 70%;
+    height: 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: .5rem;
+    background-color: transparent;
+    box-shadow: 1px 1px .5px black;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+.icon {
+    transform: rotate(90deg);
+    &:hover {
+            cursor: pointer;
+    }
+}

@@ -8,6 +8,7 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { AiFillSkype } from "react-icons/ai";
 import "./Profile.scss";
 import Input from "../../Feeds/Input";
+import Top from "../Top";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const Profile = () => {
 
   return (
     <>
+      <Top />
       <div style={{ display: "flex" }}>
         <Sidebar
           style={{
