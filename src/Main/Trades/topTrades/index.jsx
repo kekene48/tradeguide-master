@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import Sidebar from "../../Sidebar";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
-const Moralis = require("moralis").default;
+import Moralis from "moralis"
+import { useAccount } from 'wagmi'
+
 
 const Index = () => {
   const [showResult, setShowResult] = useState(false);
   const [result, setResult] = useState([]);
-  let address;
+  //let address;
+  const {address} = useAccount()
 
   const handleSubmit = async () => {
-    address = document.querySelector("#walletAddress").ariaValueMax;
+    //address = document.querySelector("#walletAddress").ariaValueMax;
     const chain = EvmChain.ETHEREUM;
 
     await Moralis.start({
-      apiKey: process.env.REACT_PUBLIC_MORALIS_API_KEY,
+      apiKey: process.env.REACT_APP_MORALIS_API,
     });
 
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
@@ -21,11 +24,14 @@ const Index = () => {
       chain,
     });
 
-    console.log(response.toJSON());
+    // console.log(response.toJSON());
     setResult(response.toJSON());
     setShowResult(true);
     document.querySelector("#walletAddress").value = "";
   };
+
+  console.log(result)
+
 
   return (
     <div style={{ display: "flex" }}>
