@@ -1,11 +1,13 @@
 import React from "react";
 import "./TradePage.scss";
 import { AiOutlineSwap } from "react-icons/ai";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const TradePage = () => {
   let targetValue1 = useRef("Link");
   let targetValue2 = useRef("USDT");
+  const [radio, setRadio] = useState(false);
+  // let radio = document.querySelector("#SLTP");
 
   //initialize the variables that would hold the coins
   let coinOne, coinTwo;
@@ -21,6 +23,10 @@ const TradePage = () => {
     }
 
     return coinOne, coinTwo;
+  };
+
+  const handleClick = () => {
+    setRadio(!radio);
   };
 
   return (
@@ -60,14 +66,32 @@ const TradePage = () => {
           </select>
         </div>
       </div>
-      <div className="swap_inputs">
-        <div className="swap_input-ST">
-          <input type="text" placeholder="STOP LOSS" />
+
+      <div className="sltp">
+        <div className="radio">
+          <label htmlFor="SLTP">Select SL/TP</label>
+          <input
+            type="checkbox"
+            name="SLTP"
+            id="SLTP"
+            onClick={() => handleClick()}
+          />
         </div>
-        <div className="swap_input-TP">
-          <input type="text" placeholder="TAKE PROFIT" />
-        </div>
+
+        {radio ? (
+          <div className="swap_inputs">
+            <div className="swap_input-ST">
+              <input type="text" placeholder="STOP LOSS" />
+            </div>
+            <div className="swap_input-TP">
+              <input type="text" placeholder="TAKE PROFIT" />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
+
       <button
         className="btn btn-primary btn-lg top-btn"
         onClick={() => console.log("swap successful")}

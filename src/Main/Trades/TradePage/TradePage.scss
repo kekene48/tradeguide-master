@@ -37,7 +37,6 @@
     &_inputs {
         display: flex;
         gap: 5rem;
-        margin-bottom: 2rem;
 
         & > * > input {
             border: 1.5px solid black;
@@ -83,4 +82,12 @@ input {
     &:hover {
             cursor: pointer;
     }
+}
+
+.sltp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
 }
