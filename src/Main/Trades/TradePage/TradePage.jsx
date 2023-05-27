@@ -6,7 +6,7 @@ import Select from "react-select";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
 import { useAccount } from "wagmi";
 import Moralis from "moralis";
-import Data from "../../../Data.json";
+import Data from "../../../Utils/Data.json";
 
 const TradePage = () => {
   let targetValue1 = useRef("Link");

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../../Sidebar";
-import Data from '../../../Data.json'
+import Data from '../../../Utils/Data.json'
 
 
 const Index = () => {
