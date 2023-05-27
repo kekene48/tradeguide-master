@@ -63,7 +63,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    <React.StrictMode>
      <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
       <RouterProvider router={router} />
