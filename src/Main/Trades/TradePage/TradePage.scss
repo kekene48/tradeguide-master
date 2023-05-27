@@ -78,7 +78,8 @@ input {
 }
 
 .icon {
-    transform: rotate(90deg);
+    transform: rotate(90deg) translateY(-52px) translateX(20px);    
+    
     &:hover {
             cursor: pointer;
     }
@@ -90,4 +91,9 @@ input {
     align-items: center;
     gap: 2rem;
     padding: 1rem;
+}
+
+.radio > label {
+    font-size: 1.2rem;
+    margin-right: .5rem;
 }
