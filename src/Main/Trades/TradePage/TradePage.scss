@@ -26,7 +26,7 @@
         & input {
             width: 20%;
             height: 2.5rem;
-            transform: translateX(4rem);
+            transform: translateX(4rem) translateY(1.3rem);
 
             &:focus {
                 outline: none;

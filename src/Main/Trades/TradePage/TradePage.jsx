@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./TradePage.scss";
 import { AiOutlineSwap } from "react-icons/ai";
 import { useRef, useState } from "react";
@@ -106,10 +106,8 @@ const TradePage = () => {
     setRadio(!radio);
   };
 
-  // const { isDisconnected } = useAccount();
-  // if (!isDisconnected) {
-  //   handleSubmit();
-  // }
+  const { isConnected } = useAccount();
+  useEffect(() => handleSubmit, [isConnected]);
 
   return (
     <>
@@ -171,7 +169,7 @@ const TradePage = () => {
 
         <button
           className="btn btn-primary btn-lg top-btn"
-          onClick={() => handleSubmit()}
+          onClick={() => console.log("swap successful")}
         >
           Swap
         </button>
