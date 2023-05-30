@@ -7,6 +7,8 @@ import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
 import Data from "../../../Utils/Data.json";
 
+import { ethers } from "ethers";
+
 const TradePage = () => {
   const { isConnected, address } = useAccount();
   const { chain } = useNetwork();
@@ -37,9 +39,8 @@ const TradePage = () => {
   const handleSubmit = async () => {
     await moralis();
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
-      // address,
       address: address,
-      chain: `0x${chain.id}`,
+      chain: ethers.toBeHex(chain.id).toString().replace("0x0", "0x"),
     });
 
     console.log(response.toJSON());
@@ -121,7 +122,7 @@ const TradePage = () => {
     if (isConnected) {
       handleSubmit();
     }
-  }, [isConnected]);
+  }, [chain.id, isConnected]);
 
   return (
     <>

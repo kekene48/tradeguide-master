@@ -6,9 +6,6 @@ import Home from "./Home/Home";
 // import Error from './Error'
 
 const App = () => {
- 
- 
-
   return (
     <>
       {" "}
