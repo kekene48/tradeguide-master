@@ -3,32 +3,44 @@ import "./TradePage.scss";
 import { AiOutlineSwap } from "react-icons/ai";
 import { useRef, useState } from "react";
 import Select from "react-select";
-import { EvmChain } from "@moralisweb3/common-evm-utils";
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
 import Data from "../../../Utils/Data.json";
 
+import { ethers } from "ethers";
+
 const TradePage = () => {
+  const { isConnected, address } = useAccount();
+  const { chain } = useNetwork();
+
   let targetValue1 = useRef("Link");
   let targetValue2 = useRef("USDT");
   const [radio, setRadio] = useState(false);
 
   //web3 API call to get the wallet balance and list of tokens available
   const [showResult, setShowResult] = useState(false);
+  const [start, setStart] = useState(true);
   const [result, setResult] = useState([]);
-  const { address } = useAccount();
+
+  const moralis = async () => {
+    try {
+      if (start) {
+        await Moralis.start({
+          apiKey: process.env.REACT_APP_MORALIS_API,
+        });
+
+        setStart(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async () => {
-    const chain = EvmChain.ETHEREUM;
-
-    await Moralis.start({
-      apiKey: process.env.REACT_APP_MORALIS_API,
-    });
-
+    await moralis();
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
-      // address,
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-      chain,
+      address: address,
+      chain: ethers.toBeHex(chain.id).toString().replace("0x0", "0x"),
     });
 
     // console.log(response.toJSON());
@@ -106,8 +118,11 @@ const TradePage = () => {
     setRadio(!radio);
   };
 
-  const { isConnected } = useAccount();
-  useEffect(isConnected ? handleSubmit() : "", [isConnected]);
+  useEffect(() => {
+    if (isConnected) {
+      handleSubmit();
+    }
+  }, [chain.id, isConnected]);
 
   return (
     <>

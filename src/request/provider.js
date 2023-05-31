@@ -1,9 +1,11 @@
 import { ethers } from "ethers/lib";
 import { useContext, createContext } from "react";
 import { contractABI, contractAddress } from "../Utils";
-import { get } from "@pushprotocol/restapi/src/lib/user";
+import * as PushAPI from "@pushprotocol/restapi";
 
 const TradeGuideContext = createContext();
+
+export const channelAddress = "";
 
 const { ethereum } = window;
 
@@ -20,6 +22,28 @@ const getContract = () => {
 };
 
 export const Provider = ({ children }) => {
+  const subscribeToNotif = async (userAddress) => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const _signer = provider.getSigner();
+
+    try {
+      await PushAPI.channels.subscribe({
+        signer: _signer,
+        channelAddress: `eip155:5:${channelAddress}`, // channel address in CAIP
+        userAddress: `eip155:5:${userAddress}`, // user address in CAIP
+        onSuccess: () => {
+          console.log("opt in success");
+        },
+        onError: () => {
+          console.error("opt in error");
+        },
+        env: "staging",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const performSwap = async (tokenIn, tokenOut, amountIn) => {
     try {
       const tradeGuideContract = getContract();
@@ -59,10 +83,10 @@ export const Provider = ({ children }) => {
     }
   };
 
-  const subscribe = async ( to) => {
+  const subscribe = async (to) => {
     try {
       const tradeGuideContract = getContract();
-      const _subscribe = await tradeGuideContract.subscribe( to);
+      const _subscribe = await tradeGuideContract.subscribe(to);
       const response = await _subscribe.wait();
       console.log(response);
     } catch (error) {
@@ -156,6 +180,7 @@ export const Provider = ({ children }) => {
       console.log(error);
     }
   };
+
   return (
     <TradeGuideContext.Provider
       value={{
@@ -169,7 +194,8 @@ export const Provider = ({ children }) => {
         setProfile,
         getNoSubscribers,
         getNoTrades,
-        getTotaltrades
+        getTotaltrades,
+        subscribeToNotif
       }}
     >
       {children}
