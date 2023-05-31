@@ -31,7 +31,7 @@ const TradePage = () => {
       chain,
     });
 
-    console.log(response.toJSON());
+    // console.log(response.toJSON());
     setResult(response.toJSON());
     setShowResult(true);
   };
@@ -107,7 +107,7 @@ const TradePage = () => {
   };
 
   const { isConnected } = useAccount();
-  useEffect(() => handleSubmit, [isConnected]);
+  useEffect(isConnected ? handleSubmit() : "", [isConnected]);
 
   return (
     <>
