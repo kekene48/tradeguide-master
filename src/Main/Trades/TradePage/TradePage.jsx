@@ -122,7 +122,7 @@ const TradePage = () => {
     if (isConnected) {
       handleSubmit();
     }
-  }, [chain.id, isConnected]);
+  }, [isConnected]);
 
   return (
     <>
