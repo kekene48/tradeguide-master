@@ -5,13 +5,14 @@ import { useRef, useState } from "react";
 import Select from "react-select";
 import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
-import Data from "../../../Utils/Data.json";
+import {data} from "../../../Utils/Data";
 
-import { ethers } from "ethers";
+import { utils } from "ethers";
 
 const TradePage = () => {
   const { isConnected, address } = useAccount();
   let { chain } = useNetwork();
+  
 
   let targetValue1 = useRef("Link");
   let targetValue2 = useRef("USDT");
@@ -41,7 +42,7 @@ const TradePage = () => {
 
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
       address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-      chain: ethers.toBeHex(chain.id).toString().replace("0x0", "0x"),
+      chain: utils.hexValue(chain.id)
     });
 
     // console.log(response.toJSON());
@@ -78,7 +79,7 @@ const TradePage = () => {
     };
   });
 
-  const options2 = Data.map((token) => {
+  const options2 = data.map((token) => {
     return {
       value: token.name,
       label: (
