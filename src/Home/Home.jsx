@@ -1,5 +1,5 @@
 import "./home.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
 import ChainLink from "../assets/Chainlink-logo.png";
 import AWS from "../assets/AWS.svg";
@@ -7,8 +7,18 @@ import Flow from "../assets/Flow.svg";
 import QuickNode from "../assets/QuickNode.svg";
 import SpaceAndTime from "../assets/SpaceAndTime.png";
 import "../bootstrap.min.css";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useEffect } from "react";
+import { useAccount } from "wagmi";
 
 function Home() {
+  const { isConnected } = useAccount();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isConnected) {
+      navigate("/main");
+    }
+  }, []);
   return (
     <>
       <div className="app">
@@ -25,7 +35,7 @@ function Home() {
             </div>
           </div>
           <Link to="/main" className="app__btn">
-            Get Started
+            <ConnectButton label="Get started" />
           </Link>
         </main>
 
@@ -188,8 +198,8 @@ function Home() {
               <div className="row d-flex justify-content-center">
                 <div className="col-lg-8">
                   <p>
-                    Made by Kelvin EKene and Eze Hope as a project for the
-                    Chainlink Spring Hackathon 2023.
+                    Made by heeze and zeke as a project for the Chainlink Spring
+                    Hackathon 2023.
                   </p>
                 </div>
               </div>

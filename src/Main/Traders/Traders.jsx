@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import "./Traders.scss";
 import Top from "../Top";
+import { traders } from "../../Utils/Data";
 
 const Traders = () => {
   const walletAddress = "0xBB7478253fd85cCdAAB8927ab97E400C2f2c281e";
@@ -26,6 +27,7 @@ const Traders = () => {
             </tr>
           </thead>
           <tbody>
+<<<<<<< HEAD
             <tr>
               <td>
                 <Link to={`/profile/${walletAddress}`}>Sergey Nazarov</Link>
@@ -88,6 +90,17 @@ const Traders = () => {
               <td>{walletAddress}</td>
               <td>{randomNumber(53, 56)}%</td>
             </tr>
+=======
+            {traders.map((trader) => (
+              <tr>
+                <td>
+                  <Link to={`/profile/${walletAddress}`}>{trader.trader}</Link>
+                </td>
+                <td>{walletAddress}</td>
+                <td>{randomNumber(82, 87)}</td>
+              </tr>
+            ))}
+>>>>>>> 75a29995588af78c9a5c1eba25cdecb3af9da25f
           </tbody>
         </table>
       </div>
