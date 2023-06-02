@@ -21,8 +21,10 @@ const Profile = () => {
   const [image, setImage] = useState(
     "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
   );
-  // let name = "Andy Horwitz";
-  // let image ="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp";
+  const [faceBook, setFaceBook] = useState("https://www.facebook.com");
+  const [twitter, setTwitter] = useState("https://www.twitter.com");
+  const [skype, setSkype] = useState("https://www.skype.com");
+  const [location, setLocation] = useState("New York");
 
   // React state to control Modal visibility
   const [showModal, setShowModal] = useState(false);
@@ -46,19 +48,6 @@ const Profile = () => {
       e.currentTarget.innerText = "Subscribe";
     }
   };
-
-  const saveProfile = async (event) => {
-   
-  };
-
-  // const handleOnChange = (e) => {
-  //   if (e.currentTarget.id === "name") {
-  //     setName(e.currentTarget.value);
-  //   }
-  //   if (e.currentTarget.id === "image") {
-  //     image = e.currentTarget.value;
-  //   }
-  // };
 
   const handleChange = () => {
     setShowModal(false);
@@ -133,7 +122,9 @@ const Profile = () => {
                           style={{
                             display: "flex",
                             flexDirection: "column",
-                            gap: "2rem",
+                            gap: "1rem",
+                            alignItems: "flex-start",
+                            paddingLeft: "7rem",
                           }}
                         >
                           <div
@@ -191,6 +182,114 @@ const Profile = () => {
                               onChange={(e) => setImage(e.target.value)}
                             />
                           </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="facebook"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Facebook Link:
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Change Name"
+                              id="facebook"
+                              value={faceBook}
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setFaceBook(e.target.value)}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="twitter"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Twitter Link:
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Change Name"
+                              id="twitter"
+                              value={twitter}
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setTwitter(e.target.value)}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="skype"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Skype Link:
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Change Name"
+                              id="skype"
+                              value={skype}
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setSkype(e.target.value)}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="location"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Location:
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Change Location"
+                              id="location"
+                              value={location}
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setLocation(e.target.value)}
+                            />
+                          </div>
                         </div>
                         <div className="modal-footer">
                           <button
@@ -213,7 +312,30 @@ const Profile = () => {
                   </div>
                   <div className="ms-3" style={{ marginTop: "130px" }}>
                     <h5>{name}</h5>
-                    <p>New York</p>
+                    <p>{location}</p>
+                  </div>
+                  <div
+                    className="w-50 text-center"
+                    style={{
+                      marginLeft: "auto",
+                      marginRight: "2rem",
+                    }}
+                  >
+                    <h5
+                      className="w-50 text-center"
+                      style={{
+                        // margin: "auto 3rem 5rem auto",
+                        position: "relative",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        minWidth: "100%",
+                      }}
+                    >
+                      Trader for almost 7 years, 500+ complete Trades. Sure
+                      crypto signals. Iusto quod libero maiores porro pariatur
+                      alias, exercitationem repellendus tempore.
+                    </h5>
                   </div>
                 </div>
                 <div
@@ -241,19 +363,40 @@ const Profile = () => {
                     type="button"
                     className="btn btn-outline-primary btn-floating socials"
                   >
-                    <CiFacebook />
+                    <a
+                      style={{ color: "blue" }}
+                      href={faceBook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <CiFacebook />
+                    </a>
                   </button>
                   <button
                     type="button"
                     className="btn btn-outline-primary btn-floating socials"
                   >
-                    <AiOutlineTwitter />
+                    <a
+                      style={{ color: "blue" }}
+                      href={twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <AiOutlineTwitter />
+                    </a>
                   </button>
                   <button
                     type="button"
                     className="btn btn-outline-primary btn-floating socials"
                   >
-                    <AiFillSkype />
+                    <a
+                      style={{ color: "blue" }}
+                      href={skype}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <AiFillSkype />
+                    </a>
                   </button>
                 </div>
                 <div className="buttons">
