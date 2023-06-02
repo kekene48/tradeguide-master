@@ -1,7 +1,5 @@
 import React from "react";
-import { useRef } from "react";
 import "./Top.scss";
-import { AiOutlineSwap } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 

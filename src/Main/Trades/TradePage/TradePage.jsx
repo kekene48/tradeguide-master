@@ -11,7 +11,7 @@ import { ethers } from "ethers";
 
 const TradePage = () => {
   const { isConnected, address } = useAccount();
-  const { chain } = useNetwork();
+  let { chain } = useNetwork();
 
   let targetValue1 = useRef("Link");
   let targetValue2 = useRef("USDT");
@@ -38,8 +38,9 @@ const TradePage = () => {
 
   const handleSubmit = async () => {
     await moralis();
+
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
-      address: address,
+      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
       chain: ethers.toBeHex(chain.id).toString().replace("0x0", "0x"),
     });
 
@@ -92,7 +93,6 @@ const TradePage = () => {
         >
           <img alt="token" height="30px" width="30px" src={token.logo} />
           <p>{token.name}</p>
-          <p>{token.price}</p>
         </div>
       ),
     };
@@ -133,7 +133,8 @@ const TradePage = () => {
             <div className="custom-select mt-5 m-auto w-75">
               <Select
                 id="custom-select-swap-1"
-                onChange={(e) => handleChange(e)}
+                // onChange={(e) => e.currentTarget.value}
+                defaultValue={options1[1]}
                 ref={targetValue1}
                 options={options1}
               />
@@ -149,7 +150,8 @@ const TradePage = () => {
             <div className="custom-select mt-5 m-auto w-75">
               <Select
                 id="custom-select-swap-2"
-                onChange={(e) => handleChange(e)}
+                defaultValue={options2[1]}
+                // onChange={(e) => (coinOne = e.currentTarget.value)}
                 ref={targetValue2}
                 options={options2}
               />

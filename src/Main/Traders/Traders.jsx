@@ -5,7 +5,7 @@ import "./Traders.scss";
 import Top from "../Top";
 
 const Traders = () => {
-  const walletAddress = "dc8g8347tq74echhe9hfhe9hwehh9f3h994hh93h4h739hkkjsjs";
+  const walletAddress = "0xBB7478253fd85cCdAAB8927ab97E400C2f2c281e";
 
   //returns a random number within a range
   function randomNumber(min, max) {
@@ -28,7 +28,7 @@ const Traders = () => {
           <tbody>
             <tr>
               <td>
-                <Link to="/profile">Sergey Nazarov</Link>
+                <Link to={`/profile/${walletAddress}`}>Sergey Nazarov</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(82, 87)}%</td>

@@ -2,8 +2,19 @@ import React from "react";
 import Sidebar from "../../Sidebar";
 import "./Trades.scss";
 import Top from "../../Top";
+import { FiCheckCircle } from "react-icons/fi";
+import { AiOutlineDash } from "react-icons/ai";
 
 const Trades = () => {
+  const completeOrNot = () => {
+    return Math.round(Math.random());
+  };
+
+  const icons = [
+    <AiOutlineDash style={{ fontSize: "1.5rem" }} />,
+    <FiCheckCircle style={{ color: "green", fontSize: "1.5rem" }} />,
+  ];
+
   return (
     <>
       <Top />
@@ -19,6 +30,7 @@ const Trades = () => {
               <th>Sell</th>
               <th>Time</th>
               <th>P / L (%)</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +42,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>2</td>
@@ -39,6 +52,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>3</td>
@@ -48,6 +62,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>4</td>
@@ -57,6 +72,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>5</td>
@@ -66,6 +82,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>6</td>
@@ -75,6 +92,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>7</td>
@@ -84,6 +102,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>8</td>
@@ -93,6 +112,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>9</td>
@@ -102,6 +122,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
             <tr>
               <td>10</td>
@@ -111,6 +132,7 @@ const Trades = () => {
               <td>1409</td>
               <td>1982353733</td>
               <td>3.5%</td>
+              <td>{icons[completeOrNot()]}</td>
             </tr>
           </tbody>
         </table>

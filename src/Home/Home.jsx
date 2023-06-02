@@ -220,7 +220,7 @@ function Home() {
             style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
           >
             © 2020 Copyright:
-            <a className="text-white" href="https://mdbootstrap.com/">
+            <a className="text-white" href="#">
               MDBootstrap.com
             </a>
           </div>
