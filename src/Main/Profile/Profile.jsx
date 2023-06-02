@@ -10,8 +10,11 @@ import { AiFillSkype } from "react-icons/ai";
 import "./Profile.scss";
 import Input from "../../Feeds/Input";
 import Top from "../Top";
+import { useTradeGuideContext } from "../../request/provider";
+import Moralis from "moralis"
 
 const Profile = () => {
+  //const { makeFileObjects, storeFiles, retrieve } = useTradeGuideContext();
   const [isOpen, setIsOpen] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
 
@@ -44,6 +47,10 @@ const Profile = () => {
     if (!Open) {
       e.currentTarget.innerText = "Subscribe";
     }
+  };
+
+  const saveProfile = async (event) => {
+   
   };
 
   // const handleOnChange = (e) => {
@@ -295,5 +302,4 @@ const Profile = () => {
     </>
   );
 };
-
 export default Profile;

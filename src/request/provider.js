@@ -3,7 +3,7 @@ import { useContext, createContext } from "react";
 import { contractABI, contractAddress } from "../Utils/constants";
 import * as PushAPI from "@pushprotocol/restapi";
 import { Web3Storage, File } from "web3.storage";
-import qs from 'qs'
+import qs from "qs";
 
 const TradeGuideContext = createContext();
 
@@ -24,75 +24,75 @@ function makeStorageClient() {
 }
 
 export const Provider = ({ children }) => {
-    const getQuote = async (_tokenS, _tokenB, amount) => {
-      try {
-        const params = {
-          sellToken: _tokenS,
-          buyToken: _tokenB,
-          // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
-          sellAmount: amount,
-        };
+  const getQuote = async (_tokenS, _tokenB, amount) => {
+    try {
+      const params = {
+        sellToken: _tokenS,
+        buyToken: _tokenB,
+        // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
+        sellAmount: amount,
+      };
 
-        const headers = { "0x-api-key": process.env.REACT_APP_OXAPI_KEY };
-        const response = await fetch(
-          `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-          { headers }
-        );
-        console.log(await response.json());
-      } catch (error) {}
-    };
+      const headers = { "0x-api-key": process.env.REACT_APP_OXAPI_KEY };
+      const response = await fetch(
+        `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+        { headers }
+      );
+      console.log(await response.json());
+    } catch (error) {}
+  };
 
-    function makeFileObjects() {
-      // You can create File objects from a Buffer of binary data
-      // see: https://nodejs.org/api/buffer.html
-      // Here we're just storing a JSON object, but you can store images,
-      // audio, or whatever you want!
-      const obj = { hello: "world" };
-      const buffer = Buffer.from(JSON.stringify(obj));
+  function makeFileObjects() {
+    // You can create File objects from a Buffer of binary data
+    // see: https://nodejs.org/api/buffer.html
+    // Here we're just storing a JSON object, but you can store images,
+    // audio, or whatever you want!
+    const obj = { hello: "world" };
+    const buffer = Buffer.from(JSON.stringify(obj));
 
-      const files = [new File([buffer], "hello.json")];
-      return files;
+    const files = [new File([buffer], "hello.json")];
+    return files;
+  }
+
+  async function storeFiles(files) {
+    const client = makeStorageClient();
+    const cid = await client.put(files);
+    console.log("stored files with cid:", cid);
+    return cid;
+  }
+
+  async function retrieve(cid) {
+    const client = makeStorageClient();
+    const res = await client.get(cid);
+    console.log(`Got a response! [${res.status}] ${res.statusText}`);
+    if (!res.ok) {
+      throw new Error(`failed to get ${cid}`);
     }
 
-    async function storeFiles(files) {
-      const client = makeStorageClient();
-      const cid = await client.put(files);
-      console.log("stored files with cid:", cid);
-      return cid;
+    // request succeeded! do something with the response object here...
+  }
+
+  const subscribeToNotif = async (userAddress) => {
+    const provider = new providers.Web3Provider(ethereum);
+    const _signer = provider.getSigner();
+
+    try {
+      await PushAPI.channels.subscribe({
+        signer: _signer,
+        channelAddress: `eip155:5:${channelAddress}`, // channel address in CAIP
+        userAddress: `eip155:5:${userAddress}`, // user address in CAIP
+        onSuccess: () => {
+          console.log("opt in success");
+        },
+        onError: () => {
+          console.error("opt in error");
+        },
+        env: "staging",
+      });
+    } catch (error) {
+      console.log(error);
     }
-
-    async function retrieve(cid) {
-      const client = makeStorageClient();
-      const res = await client.get(cid);
-      console.log(`Got a response! [${res.status}] ${res.statusText}`);
-      if (!res.ok) {
-        throw new Error(`failed to get ${cid}`);
-      }
-
-      // request succeeded! do something with the response object here...
-    }
-
-    const subscribeToNotif = async (userAddress) => {
-      const provider = new providers.Web3Provider(ethereum);
-      const _signer = provider.getSigner();
-
-      try {
-        await PushAPI.channels.subscribe({
-          signer: _signer,
-          channelAddress: `eip155:5:${channelAddress}`, // channel address in CAIP
-          userAddress: `eip155:5:${userAddress}`, // user address in CAIP
-          onSuccess: () => {
-            console.log("opt in success");
-          },
-          onError: () => {
-            console.error("opt in error");
-          },
-          env: "staging",
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  };
 
   const performSwap = async (tokenIn, tokenOut, amountIn) => {
     try {
@@ -241,7 +241,11 @@ export const Provider = ({ children }) => {
         getNoSubscribers,
         getNoTrades,
         getTotaltrades,
-         subscribeToNotif,
+        subscribeToNotif,
+        storeFiles,
+        getQuote,
+        makeFileObjects,
+        retrieve,
       }}
     >
       {children}
