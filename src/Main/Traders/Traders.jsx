@@ -35,35 +35,35 @@ const Traders = () => {
             </tr>
             <tr>
               <td>
-                <Link to="/profile">Kemal El Moujahid</Link>
+                <Link to={`/profile/${walletAddress}`}>Kemal El Moujahid</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(77, 82)}%</td>
             </tr>
             <tr>
               <td>
-                <Link to="/profile">Jeff Hasselman</Link>
+                <Link to={`/profile/${walletAddress}`}>Jeff Hasselman</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(72, 77)}%</td>
             </tr>
             <tr>
               <td>
-                <Link to="/profile">Brad Feinstein</Link>
+                <Link to={`/profile/${walletAddress}`}>Brad Feinstein</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(67, 72)}%</td>
             </tr>
             <tr>
               <td>
-                <Link to="/profile">Patrick Collins</Link>
+                <Link to={`/profile/${walletAddress}`}>Patrick Collins</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(64, 67)}%</td>
             </tr>
             <tr>
               <td>
-                <Link to="/profile">Austin Griffith</Link>
+                <Link to={`/profile/${walletAddress}`}>Austin Griffith</Link>
               </td>
               <td>{walletAddress}</td>
               <td>{randomNumber(62, 64)}%</td>
