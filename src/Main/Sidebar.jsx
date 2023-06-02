@@ -4,21 +4,23 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { GiTrade } from "react-icons/gi";
 import { MdOutlineGppGood } from "react-icons/md";
 import { BsCurrencyBitcoin } from "react-icons/bs";
-import { MdGppBad } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "../bootstrap.min.css";
+import { useAccount } from "wagmi";
 
 const Sidebar = () => {
+  const { address } = useAccount();
+
   return (
     <div className="sidebar py-5">
       <Link to="/main">
         <div className="profile options">
           <BsCurrencyBitcoin />
-          <h2>Main</h2>
+          <h2 style={{ marginTop: "2rem" }}>Main</h2>
         </div>
       </Link>
 
-      <Link to="/profile">
+      <Link to={`/profile/${address}`}>
         <div className="profile options">
           <BsFillPersonFill />
           <h2>Profile</h2>

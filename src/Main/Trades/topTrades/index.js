@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "../../Sidebar";
-import Data from '../../../Utils/Data.json'
-
+import './TopTrades.scss'
+import '../../../bootstrap.min.css'
 
 const Index = () => {
-
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
-      Top Trades
-      {Data.map(token => {
-        return (
-          <>
-            <p>{token.name}</p> 
-            <p>{token.price}</p>
-          </>
-        ) 
-      })}
-    </div>
+      <>
+        <div style={{ display: "flex", flexDirection: 'row' }}>
+          <Sidebar />
+        Top Trades
+        </div>
+      </>       
   );
 };
 

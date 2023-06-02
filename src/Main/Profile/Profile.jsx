@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import Feed from "../../Feeds/Feed";
 import Modale from "../Modal/Modal";
 import "../../bootstrap.min.css";
+import { Modal } from "react-overlays";
 import { CiFacebook } from "react-icons/ci";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { AiFillSkype } from "react-icons/ai";
@@ -13,6 +14,23 @@ import Top from "../Top";
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
+
+  //Set Profile Image and Name
+  const [name, setName] = useState("Andy Horwitz");
+  const [image, setImage] = useState(
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+  );
+  // let name = "Andy Horwitz";
+  // let image ="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp";
+
+  // React state to control Modal visibility
+  const [showModal, setShowModal] = useState(false);
+
+  // Backdrop JSX code
+  const renderBackdrop = (props) => <div className="backdrop" {...props} />;
+
+  var handleClose = () => setShowModal(false);
+
   let Open;
 
   const handleSubscribe = (e) => {
@@ -26,6 +44,20 @@ const Profile = () => {
     if (!Open) {
       e.currentTarget.innerText = "Subscribe";
     }
+  };
+
+  // const handleOnChange = (e) => {
+  //   if (e.currentTarget.id === "name") {
+  //     setName(e.currentTarget.value);
+  //   }
+  //   if (e.currentTarget.id === "image") {
+  //     image = e.currentTarget.value;
+  //   }
+  // };
+
+  const handleChange = () => {
+    setShowModal(false);
+    // console.log(name, image);
   };
 
   Open = subOpen;
@@ -58,22 +90,124 @@ const Profile = () => {
                     style={{ width: "150px" }}
                   >
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                      alt="Generic placeholder"
+                      src={image}
+                      alt={image}
                       className="img-fluid img-thumbnail mt-4 mb-2"
                       style={{ width: "150px", zIndex: "1" }}
                     />
                     <button
                       type="button"
-                      className="btn btn-outline-dark"
-                      data-mdb-ripple-color="dark"
+                      onClick={() => setShowModal(true)}
+                      className="btn btn-outline-dark mdbbtn"
                       style={{ zIndex: "1" }}
                     >
                       Edit profile
                     </button>
+                    {/* MODAL START */}
+
+                    <Modal
+                      className={`modal ${showModal ? "blockDisplay" : ""}`}
+                      show={showModal}
+                      onHide={handleClose}
+                      renderBackdrop={renderBackdrop}
+                    >
+                      <div>
+                        <div className="modal-header">
+                          <div className="modal-title">Modal Heading</div>
+                          <div>
+                            <span
+                              className="close-button"
+                              onClick={handleClose}
+                            >
+                              x
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="modal-desc"
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2rem",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="name"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Name:
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Change Name"
+                              id="name"
+                              value={name}
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setName(e.target.value)}
+                            />
+                          </div>
+
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label
+                              htmlFor="image"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Change Profile Image:
+                            </label>
+                            <input
+                              type="text"
+                              id="image"
+                              value={image}
+                              placeholder="Enter URL of new Profile Image"
+                              style={{
+                                border: "1px solid black",
+                                height: "2.5rem",
+                                width: "15rem",
+                                borderRadius: "5px",
+                              }}
+                              onChange={(e) => setImage(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            className="secondary-button"
+                            onClick={handleClose}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="primary-button"
+                            onClick={handleChange}
+                          >
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </Modal>
+
+                    {/* MODAL END */}
                   </div>
                   <div className="ms-3" style={{ marginTop: "130px" }}>
-                    <h5>Andy Horwitz</h5>
+                    <h5>{name}</h5>
                     <p>New York</p>
                   </div>
                 </div>

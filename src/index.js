@@ -62,6 +62,10 @@ const router = createBrowserRouter([
     element: <Traders />,
   },
   {
+    path: '/profile/:id',
+    element: <Profile />
+  },
+  {
     path: "/toptrades",
     element: <TopTrades />,
   },

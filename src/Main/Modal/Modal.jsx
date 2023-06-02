@@ -68,7 +68,7 @@ const Modale = ({ isOpen, setIsOpen }) => {
                 handleSuccess();
               }}
             >
-              Save Changes
+              Confirm
             </button>
           </div>
         </div>
