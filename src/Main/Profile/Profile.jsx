@@ -10,7 +10,10 @@ import { AiFillSkype } from "react-icons/ai";
 import "./Profile.scss";
 import Input from "../../Feeds/Input";
 import Top from "../Top";
-import Moralis from "moralis"
+import Moralis from "moralis";
+import {useParams} from 'react-router-dom'
+//import fs from "fs";
+import { useTradeGuideContext } from "../../request/provider";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +21,7 @@ const Profile = () => {
 
   //Set Profile Image and Name
   const [name, setName] = useState("Andy Horwitz");
-  const [image, setImage] = useState(
-    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-  );
+  const [image, setImage] = useState();
   const [faceBook, setFaceBook] = useState("https://www.facebook.com");
   const [twitter, setTwitter] = useState("https://www.twitter.com");
   const [skype, setSkype] = useState("https://www.skype.com");
@@ -28,12 +29,18 @@ const Profile = () => {
 
   // React state to control Modal visibility
   const [showModal, setShowModal] = useState(false);
+  const [start, setStart] = useState(true);
+  const {id} = useParams()
+  
+  //const { setProfile, getProfile } = useTradeGuideContext();
 
   // Backdrop JSX code
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
 
   var handleClose = () => setShowModal(false);
 
+  const defImage =
+    "https://images.unsplash.com/photo-1618588507085-c79565432917?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1790&q=80";
   let Open;
 
   const handleSubscribe = (e) => {
@@ -48,10 +55,75 @@ const Profile = () => {
       e.currentTarget.innerText = "Subscribe";
     }
   };
+  const moralis = async () => {
+    try {
+      if (start) {
+        await Moralis.start({
+          apiKey: process.env.REACT_APP_MORALIS_API,
+        });
+
+        setStart(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const uploadDoc = async (file) => {
+    moralis();
+
+    const uploadArray = [
+      {
+        path: file.name,
+        content: file//fs.readFile(file, { encoding: "base64" }),
+      },
+    ];
+
+    const response = Moralis.EvmApi.ipfs.uploadFolder({
+      abi: uploadArray,
+    });
+    console.log((await response).result);
+    const cid = (await response).result[0].path;
+    //saveFiles(cid);
+  };
+
+  const saveFiles = async (imageLink) => {
+    const uploadArray = [
+      {
+        path: "userInfo.json",
+        content: {
+          name: name,
+          image: imageLink,
+          location: location,
+          social_Media: {
+            faceBook: faceBook,
+            twitter: twitter,
+            skype: skype,
+          },
+        },
+      },
+    ];
+    const response = await Moralis.EvmApi.ipfs.uploadFolder({
+      abi: uploadArray,
+    });
+
+    console.log((await response).result);
+    const cid = (await response).result[0].path;
+    //await setProfile(cid);
+  };
+
+  const getFiles = async () => {
+    //const url = await getProfile(id);
+
+    //const res = await fetch(url)
+    
+
+
+  }
 
   const handleChange = () => {
     setShowModal(false);
-    // console.log(name, image);
+    uploadDoc(image);
   };
 
   Open = subOpen;
@@ -83,12 +155,17 @@ const Profile = () => {
                     className="ms-4 mt-5 d-flex flex-column"
                     style={{ width: "150px" }}
                   >
-                    <img
-                      src={image}
-                      alt={image}
-                      className="img-fluid img-thumbnail mt-4 mb-2"
-                      style={{ width: "150px", zIndex: "1" }}
-                    />
+                    {image != undefined ? (
+                      <img />
+                    ) : (
+                      <img
+                        src={defImage}
+                        alt="def-image"
+                        className="img-fluid img-thumbnail mt-4 mb-2"
+                        style={{ width: "150px", zIndex: "1" }}
+                      />
+                    )}
+
                     <button
                       type="button"
                       onClick={() => setShowModal(true)}
@@ -163,15 +240,14 @@ const Profile = () => {
                             }}
                           >
                             <label
-                              htmlFor="image"
+                              htmlFor="file"
                               style={{ fontWeight: "bold" }}
                             >
                               Change Profile Image:
                             </label>
                             <input
-                              type="text"
-                              id="image"
-                              value={image}
+                              type="file"
+                              id="file"
                               placeholder="Enter URL of new Profile Image"
                               style={{
                                 border: "1px solid black",
@@ -179,7 +255,10 @@ const Profile = () => {
                                 width: "15rem",
                                 borderRadius: "5px",
                               }}
-                              onChange={(e) => setImage(e.target.value)}
+                              onChange={(e) => {
+                                setImage(e.target.files[0]);
+                                console.log(e.target.files[0]);
+                              }}
                             />
                           </div>
                           <div

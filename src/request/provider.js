@@ -2,7 +2,6 @@ import { providers, Contract } from "ethers";
 import { useContext, createContext } from "react";
 import { contractABI, contractAddress } from "../Utils/constants";
 import * as PushAPI from "@pushprotocol/restapi";
-import { Web3Storage, File } from "web3.storage";
 import qs from "qs";
 
 const TradeGuideContext = createContext();
@@ -18,10 +17,6 @@ const getContract = () => {
 
   return tradeguideContract;
 };
-
-function makeStorageClient() {
-  return new Web3Storage({ token: process.env.REACT_APP_WEB3STORAGE });
-}
 
 export const Provider = ({ children }) => {
   const getQuote = async (_tokenS, _tokenB, amount) => {
@@ -41,36 +36,6 @@ export const Provider = ({ children }) => {
       console.log(await response.json());
     } catch (error) {}
   };
-
-  function makeFileObjects() {
-    // You can create File objects from a Buffer of binary data
-    // see: https://nodejs.org/api/buffer.html
-    // Here we're just storing a JSON object, but you can store images,
-    // audio, or whatever you want!
-    const obj = { hello: "world" };
-    const buffer = Buffer.from(JSON.stringify(obj));
-
-    const files = [new File([buffer], "hello.json")];
-    return files;
-  }
-
-  async function storeFiles(files) {
-    const client = makeStorageClient();
-    const cid = await client.put(files);
-    console.log("stored files with cid:", cid);
-    return cid;
-  }
-
-  async function retrieve(cid) {
-    const client = makeStorageClient();
-    const res = await client.get(cid);
-    console.log(`Got a response! [${res.status}] ${res.statusText}`);
-    if (!res.ok) {
-      throw new Error(`failed to get ${cid}`);
-    }
-
-    // request succeeded! do something with the response object here...
-  }
 
   const subscribeToNotif = async (userAddress) => {
     const provider = new providers.Web3Provider(ethereum);
@@ -166,6 +131,17 @@ export const Provider = ({ children }) => {
     }
   };
 
+  const addPost = async (link) => {
+    try {
+      const tradeGuideContract = getContract();
+      const _addPost = await tradeGuideContract.addAPost(link);
+      const res = await _addPost.wait();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //_________________________Read Functions ________________________________
 
   const getTrades = async () => {
@@ -173,6 +149,15 @@ export const Provider = ({ children }) => {
       const tradeGuideContract = getContract();
       const _getTrades = await tradeGuideContract.getTrades();
       return _getTrades;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getPosts = async () => {
+    try {
+      const tradeGuideContract = getContract();
+      const _getPosts = await tradeGuideContract.getPosts();
+      return _getPosts;
     } catch (error) {
       console.log(error);
     }
@@ -242,10 +227,9 @@ export const Provider = ({ children }) => {
         getNoTrades,
         getTotaltrades,
         subscribeToNotif,
-        storeFiles,
         getQuote,
-        makeFileObjects,
-        retrieve,
+        getPosts,
+        addPost,
       }}
     >
       {children}

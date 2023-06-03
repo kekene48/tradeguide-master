@@ -11,14 +11,19 @@ module.exports = function override(config) {
     os: require.resolve("os-browserify"),
     url: require.resolve("url"),
     zlib: require.resolve("browserify-zlib"),
-    "process/browser": require.resolve("process/browser"),
   });
   config.resolve.fallback = fallback;
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
-      process: "browser.js",
+      process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
   ]);
+  config.module.rules.unshift({
+    test: /\.m?js$/,
+    resolve: {
+      fullySpecified: false, // disable the behavior
+    },
+  });
   return config;
 };
