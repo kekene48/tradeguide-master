@@ -4,7 +4,7 @@ import "./Trades.scss";
 import Top from "../../Top";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
-import { useTradeGuideContext } from "../../../request/provider";
+//import { useTradeGuideContext } from "../../../request/provider";
 import { trades } from "../../../Utils/Data";
 
 const Trades = () => {
