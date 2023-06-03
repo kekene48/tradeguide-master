@@ -27,70 +27,6 @@ const Traders = () => {
             </tr>
           </thead>
           <tbody>
-<<<<<<< HEAD
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Sergey Nazarov</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(82, 87)}%</td>
-            </tr>
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Kemal El Moujahid</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(77, 82)}%</td>
-            </tr>
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Jeff Hasselman</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(72, 77)}%</td>
-            </tr>
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Brad Feinstein</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(67, 72)}%</td>
-            </tr>
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Patrick Collins</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(64, 67)}%</td>
-            </tr>
-            <tr>
-              <td>
-                <Link to={`/profile/${walletAddress}`}>Austin Griffith</Link>
-              </td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(62, 64)}%</td>
-            </tr>
-            <tr>
-              <td>Stefan Rust</td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(60, 62)}%</td>
-            </tr>
-            <tr>
-              <td>Radek Sienkiewicz</td>
-              <td>${walletAddress}</td>
-              <td>{randomNumber(58, 60)}%</td>
-            </tr>
-            <tr>
-              <td>Scott Dykstra</td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(56, 58)}%</td>
-            </tr>
-            <tr>
-              <td>Ebru Engwal</td>
-              <td>{walletAddress}</td>
-              <td>{randomNumber(53, 56)}%</td>
-            </tr>
-=======
             {traders.map((trader) => (
               <tr>
                 <td>
@@ -100,7 +36,6 @@ const Traders = () => {
                 <td>{randomNumber(82, 87)}</td>
               </tr>
             ))}
->>>>>>> 75a29995588af78c9a5c1eba25cdecb3af9da25f
           </tbody>
         </table>
       </div>
