@@ -131,6 +131,17 @@ export const Provider = ({ children }) => {
     }
   };
 
+  const addPost = async (link) => {
+    try {
+      const tradeGuideContract = getContract();
+      const _addPost = await tradeGuideContract.addAPost(link);
+      const res = await _addPost.wait();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //_________________________Read Functions ________________________________
 
   const getTrades = async () => {
@@ -138,6 +149,15 @@ export const Provider = ({ children }) => {
       const tradeGuideContract = getContract();
       const _getTrades = await tradeGuideContract.getTrades();
       return _getTrades;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getPosts = async () => {
+    try {
+      const tradeGuideContract = getContract();
+      const _getPosts = await tradeGuideContract.getPosts();
+      return _getPosts;
     } catch (error) {
       console.log(error);
     }
@@ -207,10 +227,9 @@ export const Provider = ({ children }) => {
         getNoTrades,
         getTotaltrades,
         subscribeToNotif,
-        //storeFiles,
         getQuote,
-        //makeFileObjects,
-        //retrieve,
+        getPosts,
+        addPost,
       }}
     >
       {children}
