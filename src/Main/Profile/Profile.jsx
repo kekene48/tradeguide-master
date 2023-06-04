@@ -11,7 +11,7 @@ import "./Profile.scss";
 import Input from "../../Feeds/Input";
 import Top from "../Top";
 import Moralis from "moralis";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 //import fs from "fs";
 import { useTradeGuideContext } from "../../request/provider";
 
@@ -30,8 +30,8 @@ const Profile = () => {
   // React state to control Modal visibility
   const [showModal, setShowModal] = useState(false);
   const [start, setStart] = useState(true);
-  const {id} = useParams()
-  
+  const { id } = useParams();
+
   //const { setProfile, getProfile } = useTradeGuideContext();
 
   // Backdrop JSX code
@@ -40,7 +40,7 @@ const Profile = () => {
   var handleClose = () => setShowModal(false);
 
   const defImage =
-    "https://images.unsplash.com/photo-1618588507085-c79565432917?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1790&q=80";
+    "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp";
   let Open;
 
   const handleSubscribe = (e) => {
@@ -75,7 +75,7 @@ const Profile = () => {
     const uploadArray = [
       {
         path: file.name,
-        content: file//fs.readFile(file, { encoding: "base64" }),
+        content: file, //fs.readFile(file, { encoding: "base64" }),
       },
     ];
 
@@ -114,12 +114,8 @@ const Profile = () => {
 
   const getFiles = async () => {
     //const url = await getProfile(id);
-
     //const res = await fetch(url)
-    
-
-
-  }
+  };
 
   const handleChange = () => {
     setShowModal(false);
