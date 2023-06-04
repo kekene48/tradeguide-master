@@ -6,6 +6,7 @@ import AWS from "../assets/AWS.svg";
 import Flow from "../assets/Flow.svg";
 import QuickNode from "../assets/QuickNode.svg";
 import SpaceAndTime from "../assets/SpaceAndTime.png";
+import Cover from "../assets/cover.png";
 import "../bootstrap.min.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect } from "react";
@@ -24,8 +25,9 @@ function Home() {
       <div className="app">
         <main className="app__main">
           <div className="app__top">
-            <div className="app__logo"></div>
-            <div className="app__title">Trade Guide</div>
+            {/* <div className="app__logo"></div>
+            <div className="app__title">Trade Guide</div> */}
+            <img src={Cover} alt="TradeGuide" style={{ width: "25rem" }} />
           </div>
           <div className="app__motto">
             <div className="app__motto-lg">Trade Guide</div>
