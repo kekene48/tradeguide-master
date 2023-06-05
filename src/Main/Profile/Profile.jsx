@@ -11,7 +11,7 @@ import "./Profile.scss";
 import Input from "../../Feeds/Input";
 import Top from "../Top";
 import Moralis from "moralis";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 //import fs from "fs";
 import { useTradeGuideContext } from "../../request/provider";
 
@@ -30,8 +30,8 @@ const Profile = () => {
   // React state to control Modal visibility
   const [showModal, setShowModal] = useState(false);
   const [start, setStart] = useState(true);
-  const {id} = useParams()
-  
+  const { id } = useParams();
+
   //const { setProfile, getProfile } = useTradeGuideContext();
 
   // Backdrop JSX code
@@ -75,7 +75,7 @@ const Profile = () => {
     const uploadArray = [
       {
         path: file.name,
-        content: file//fs.readFile(file, { encoding: "base64" }),
+        content: file, //fs.readFile(file, { encoding: "base64" }),
       },
     ];
 
@@ -114,12 +114,9 @@ const Profile = () => {
 
   const getFiles = async () => {
     //const url = await getProfile(id);
-
     //const res = await fetch(url)
-    
-
-
-  }
+    //console.log(res[0])
+  };
 
   const handleChange = () => {
     setShowModal(false);
@@ -156,11 +153,11 @@ const Profile = () => {
                     style={{ width: "150px" }}
                   >
                     {image != undefined ? (
-                      <img />
+                      <img  />
                     ) : (
                       <img
                         src={defImage}
-                        alt="def-image"
+                        alt="default"
                         className="img-fluid img-thumbnail mt-4 mb-2"
                         style={{ width: "150px", zIndex: "1" }}
                       />
@@ -517,7 +514,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {Open ? <Feed /> : ""}
+      {Open ? <Feed id={id} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
     </>
   );
