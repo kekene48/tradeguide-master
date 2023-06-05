@@ -77,7 +77,7 @@ const Profile = () => {
     const uploadArray = [
       {
         path: file.name,
-        content: file, //fs.readFile(file, { encoding: "base64" }),
+        content: file,  //fs.readFile(file, { encoding: "base64" }),
       },
     ];
 
@@ -117,6 +117,7 @@ const Profile = () => {
   const getFiles = async () => {
     //const url = await getProfile(id);
     //const res = await fetch(url)
+    //console.log(res[0])
   };
 
   const handleChange = () => {
@@ -163,11 +164,11 @@ const Profile = () => {
                     style={{ width: "150px" }}
                   >
                     {image != undefined ? (
-                      <img />
+                      <img  />
                     ) : (
                       <img
                         src={defImage}
-                        alt="def-image"
+                        alt="default"
                         className="img-fluid img-thumbnail mt-4 mb-2"
                         style={{ width: "150px", zIndex: "1" }}
                       />
@@ -524,7 +525,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {Open ? <Feed /> : ""}
+      {Open ? <Feed id={id} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
     </>
   );
