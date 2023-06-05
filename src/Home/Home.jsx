@@ -6,6 +6,7 @@ import AWS from "../assets/AWS.svg";
 import Flow from "../assets/Flow.svg";
 import QuickNode from "../assets/QuickNode.svg";
 import SpaceAndTime from "../assets/SpaceAndTime.png";
+import Cover from "../assets/cover.png";
 import "../bootstrap.min.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect } from "react";
@@ -24,8 +25,9 @@ function Home() {
       <div className="app">
         <main className="app__main">
           <div className="app__top">
-            <div className="app__logo"></div>
-            <div className="app__title">Trade Guide</div>
+            {/* <div className="app__logo"></div>
+            <div className="app__title">Trade Guide</div> */}
+            <img src={Cover} alt="TradeGuide" style={{ width: "25rem" }} />
           </div>
           <div className="app__motto">
             <div className="app__motto-lg">Trade Guide</div>
@@ -105,40 +107,38 @@ function Home() {
               More Than A 1000 succesful Trades
             </h2>
             <p className="services__card-p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem a
-              ipsum expedita alias quae rem. Hic quod nihil corporis doloremque
-              consequuntur sed, esse dicta asperiores accusantium, aspernatur
-              quae placeat ab voluptate mollitia accusamus quam obcaecati sequi
-              neque, repellendus eum quasi quibusdam. Qui expedita asperiores
-              dolorem voluptatum
+              With a history of over 1000 succesful trades, you know our
+              resources are totally tested and trusted and that our platform
+              provides the best of the best with minified risk of failure. We
+              provide the absolute best, which you can see from our Top Traders
+              section. accusamus quam obcaecati sequi neque, repellendus eum
+              quasi quibusdam. Qui expedita asperiores dolorem voluptatum
             </p>
             <FcCheckmark className="services__card-icon" />
           </div>
           <div className="services__card-2 services__card">
             <h2 className="services__card-h2">
-              Follow trends of succesful trades
+              Follow trends of succesful traders
             </h2>
             <p className="services__card-p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem a
-              ipsum expedita alias quae rem. Hic quod nihil corporis doloremque
-              consequuntur sed, esse dicta asperiores accusantium, aspernatur
-              quae placeat ab voluptate mollitia accusamus quam obcaecati sequi
+              We know how intimidating trading as a beginner can be, so your
+              first trades would be totally guided by the traders you subscribe
+              to to reduce your chances of loss, everything you need to know
+              about a trade is specifically provided and tailored for you.
               neque, repellendus eum quasi quibusdam. Qui expedita asperiores
               dolorem voluptatum
             </p>
             <FcCheckmark className="services__card-icon" />
           </div>
           <div className="services__card-3 services__card">
-            <h2 className="services__card-h2">
-              Trade Along with Minified risk
-            </h2>
+            <h2 className="services__card-h2">Learn with InApp Tutorials</h2>
             <p className="services__card-p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem a
-              ipsum expedita alias quae rem. Hic quod nihil corporis doloremque
-              consequuntur sed, esse dicta asperiores accusantium, aspernatur
-              quae placeat ab voluptate mollitia accusamus quam obcaecati sequi
+              While trading the traders you subscribe to also provide trasing
+              tutorial videos that include trading techniques, strategies and
+              many more. sed, esse dicta asperiores accusantium, aspernatur quae
+              placeat ab voluptate mollitia accusamus quam obcaecati sequi
               neque, repellendus eum quasi quibusdam. Qui expedita asperiores
-              dolorem voluptatum
+              dolorem voluptatum.Accusamus, voluptas? Odit unde eius porro odio?
             </p>
             <FcCheckmark className="services__card-icon" />
           </div>

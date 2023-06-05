@@ -119,7 +119,7 @@ const Feed = ({ id }) => {
                     <ReactPlayer
                       className="img-fluid img-responsive"
                       controls={true}
-                      url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                      url="https://youtu.be/gKylTRnaFsk"
                     />
                   </div>
                 </div>
