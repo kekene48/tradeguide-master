@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar";
 import Feed from "../../Feeds/Feed";
 import Modale from "../Modal/Modal";
@@ -12,6 +12,8 @@ import Input from "../../Feeds/Input";
 import Top from "../Top";
 import Moralis from "moralis";
 import { useParams } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 //import fs from "fs";
 import { useTradeGuideContext } from "../../request/provider";
 
@@ -124,10 +126,19 @@ const Profile = () => {
 
   Open = subOpen;
 
+  //if user disconnects, this takes them back to home page
+  const { isDisconnected } = useAccount();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isDisconnected) {
+      navigate("/");
+    }
+  }, [isDisconnected]);
+
   return (
     <>
       <Top />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", transform: "translateY(5.6rem)" }}>
         <Sidebar
           style={{
             height: document.body.scrollHeight

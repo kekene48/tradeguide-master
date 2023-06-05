@@ -10,6 +10,8 @@ $color-black: #000;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: fixed;
+    z-index: 1039;
     
     &-btn {
         width: 10rem;

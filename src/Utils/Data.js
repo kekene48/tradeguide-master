@@ -29,7 +29,7 @@ export const trades = [
     token: "Ether",
     buy_price: 1300,
     amount: 4.28,
-    sl_tp: 2333 / 3333,
+    sl_tp: "1233 / 3333",
     pl: 3.5,
   },
   {
@@ -39,7 +39,7 @@ export const trades = [
     token: "Ether",
     buy_price: 1300,
     amount: 1.49,
-    sl_tp: 2333 / 3333,
+    sl_tp: "1233 / 3333",
     pl: 3.5,
   },
   {
@@ -49,7 +49,7 @@ export const trades = [
     token: "Ether",
     buy_price: 1300,
     amount: 1.4,
-    sl_tp: 2333 / 3333,
+    sl_tp: "1233 / 3333",
     pl: 3.5,
   },
   {
@@ -59,7 +59,7 @@ export const trades = [
     token: "Ether",
     buy_price: 1300,
     amount: 0.5,
-    sl_tp: 2333 / 3333,
+    sl_tp: "1233 / 3333",
     pl: 3.5,
   },
 ];

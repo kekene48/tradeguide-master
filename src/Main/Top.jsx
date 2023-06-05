@@ -10,14 +10,13 @@ const Top = () => {
       <Link
         to="/"
         className="app__top"
-        style={{ left: "-3rem", top: "-.5rem" }}
+        style={{ left: "-8rem", top: "-.5rem" }}
       >
-        {/* <div
-          className="app__logo"
-          style={{ width: "4rem", height: "4rem" }}
-        ></div> */}
-        <img src={Logo} alt="TradeGuide" style={{ width: "20rem" }} />
-        {/* <div className="app__title">Trade Guide</div> */}
+        <img
+          src={Logo}
+          alt="TradeGuide"
+          style={{ width: "20rem", marginTop: "1rem" }}
+        />
       </Link>
       <div style={{}}>
         <ConnectButton />

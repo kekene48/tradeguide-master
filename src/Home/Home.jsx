@@ -14,19 +14,18 @@ import { useAccount } from "wagmi";
 
 function Home() {
   const { isConnected } = useAccount();
+  const { address } = useAccount();
   const navigate = useNavigate();
   useEffect(() => {
     if (isConnected) {
-      navigate("/main");
+      navigate(`/profile/${address}`);
     }
-  }, []);
+  }, [isConnected]);
   return (
     <>
       <div className="app">
         <main className="app__main">
           <div className="app__top">
-            {/* <div className="app__logo"></div>
-            <div className="app__title">Trade Guide</div> */}
             <img src={Cover} alt="TradeGuide" style={{ width: "25rem" }} />
           </div>
           <div className="app__motto">
@@ -36,7 +35,7 @@ function Home() {
               as
             </div>
           </div>
-          <Link to="/main" className="app__btn">
+          <Link to="" className="app__btn">
             <ConnectButton label="Get started" />
           </Link>
         </main>
@@ -75,22 +74,22 @@ function Home() {
         {/* CARDS */}
         <section className="about">
           <div className="about__card about__card-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab ad sit
-            nesciunt laboriosam dolore autem quo. Fugit omnis tempore alias odit
-            esse nihil explicabo molestiae incidunt, repellendus ea.
-            Necessitatibus, facere.
+            Take a pick from our list of top traders and decide whom you want to
+            subscribe to. This list contains the best of the best traders on our
+            platform, so rest assured you are in good hands. dit esse nihil
+            explicabo molestiae incidunt, repe.
           </div>
           <div className="about__card about__card-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-            architecto nisi laudantium earum pariatur excepturi, facere eum
-            iusto voluptatum ullam blanditiis, provident dolorem perspiciatis
-            dolor eius expedita? Asperiores, quasi culpa.
+            Look through a subscribed traders history and see what they've being
+            up to. Subscribe and geta feel around at how professional traders
+            look at the market Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Eos architecto nisi bags.
           </div>
           <div className="about__card about__card-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quae
-            ducimus officiis! Illum saepe, non est similique suscipit placeat.
-            Possimus adipisci sapiente tempore harum iusto atque accusantium
-            quae, quos quisquam.
+            Never miss a trade, Receive notifications when your preferred
+            (subscribed) trader is about to make a trade, so you follow along as
+            they do. And see how they set all their parameters, simply get a
+            feel at real trading strategies. Lorem ipsum dolor
           </div>
           <div className="about__card about__card-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quae
@@ -197,10 +196,10 @@ function Home() {
             <section className="mb-5">
               <div className="row d-flex justify-content-center">
                 <div className="col-lg-8">
-                  <p>
+                  <h4>
                     Made by heeze and zeke as a project for the Chainlink Spring
                     Hackathon 2023.
-                  </p>
+                  </h4>
                 </div>
               </div>
             </section>
@@ -231,7 +230,7 @@ function Home() {
           >
             © 2023 Copyright
             <a className="text-white" href="#">
-              &nbsp; &nbsp;TradeGuide
+              &nbsp;TradeGuide
             </a>
           </div>
         </footer>

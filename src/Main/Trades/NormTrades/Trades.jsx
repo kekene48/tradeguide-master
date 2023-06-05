@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../Sidebar";
 import "./Trades.scss";
 import Top from "../../Top";
@@ -6,6 +6,8 @@ import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
 //import { useTradeGuideContext } from "../../../request/provider";
 import { trades } from "../../../Utils/Data";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 const Trades = () => {
   // const { getTrades } = useTradeGuideContext();
@@ -18,10 +20,19 @@ const Trades = () => {
     <FiCheckCircle style={{ color: "green", fontSize: "1.5rem" }} />,
   ];
 
+  //if user disconnects, this takes them back to home page
+  const { isDisconnected } = useAccount();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isDisconnected) {
+      navigate("/");
+    }
+  }, [isDisconnected]);
+
   return (
     <>
       <Top />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", transform: "translateY(5.6rem)" }}>
         <Sidebar />
         <table className="styled-table">
           <thead>
