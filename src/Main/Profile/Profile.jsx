@@ -77,7 +77,7 @@ const Profile = () => {
     const uploadArray = [
       {
         path: file.name,
-        content: file,  //fs.readFile(file, { encoding: "base64" }),
+        content: file, //fs.readFile(file, { encoding: "base64" }),
       },
     ];
 
@@ -164,7 +164,7 @@ const Profile = () => {
                     style={{ width: "150px" }}
                   >
                     {image != undefined ? (
-                      <img  />
+                      <img />
                     ) : (
                       <img
                         src={defImage}
