@@ -2,54 +2,54 @@ import React from "react";
 import ReactPlayer from "react-player/lazy";
 import "./Feed.scss";
 import "../bootstrap.min.css";
-import { useTradeGuideContext } from "../request/provider";
+//import { useTradeGuideContext } from "../request/provider";
 import { useAccount } from "wagmi";
 import Moralis from "moralis";
 
 const Feed = ({ id }) => {
   const [start, setStart] = React.useState(true);
   const { address } = useAccount();
-  const { getPosts, addPost } = useTradeGuideContext();
+  //const { getPosts, addPost } = useTradeGuideContext();
 
-  const moralis = async () => {
-    try {
-      if (start) {
-        await Moralis.start({
-          apiKey: process.env.REACT_APP_MORALIS_API,
-        });
+  // const moralis = async () => {
+  //   try {
+  //     if (start) {
+  //       await Moralis.start({
+  //         apiKey: process.env.REACT_APP_MORALIS_API,
+  //       });
 
-        setStart(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const _addpost = async (file) => {
-    moralis();
+  //       setStart(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const _addpost = async (file) => {
+  //   moralis();
 
-    const uploadArray = [
-      {
-        path: file.name,
-        content: file, //fs.readFile(file, { encoding: "base64" }),
-      },
-    ];
+  //   const uploadArray = [
+  //     {
+  //       path: file.name,
+  //       content: file, //fs.readFile(file, { encoding: "base64" }),
+  //     },
+  //   ];
 
-    const response = Moralis.EvmApi.ipfs.uploadFolder({
-      abi: uploadArray,
-    });
-    console.log((await response).result);
-    const cid = (await response).result[0].path;
-    await addPost(cid);
-  };
-  const _getPost = async () => {
-    const postArray = [];
-    const posts = await getPosts();
-    posts.forEach(async (post) => {
-      const res = await fetch(post);
-      const result = await res.json();
-      postArray.push(result);
-    });
-  };
+  //   const response = Moralis.EvmApi.ipfs.uploadFolder({
+  //     abi: uploadArray,
+  //   });
+  //   console.log((await response).result);
+  //   const cid = (await response).result[0].path;
+  //   await addPost(cid);
+  // };
+  // const _getPost = async () => {
+  //   const postArray = [];
+  //   const posts = await getPosts();
+  //   posts.forEach(async (post) => {
+  //     const res = await fetch(post);
+  //     const result = await res.json();
+  //     postArray.push(result);
+  //   });
+  // };
   return (
     <>
       <div className="container mt-4 mb-5">
