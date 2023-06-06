@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 //import fs from "fs";
-import { useTradeGuideContext } from "../../request/provider";
+// import { useTradeGuideContext } from "../../request/provider";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
