@@ -134,6 +134,7 @@ const TradePage = () => {
               <Select
                 id="custom-select-swap-1"
                 // onChange={(e) => e.currentTarget.value}
+                
                 defaultValue={options1[1]}
                 ref={targetValue1}
                 options={options1}

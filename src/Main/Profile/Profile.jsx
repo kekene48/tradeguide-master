@@ -11,30 +11,101 @@ import "./Profile.scss";
 import Input from "../../Feeds/Input";
 import Top from "../Top";
 import Moralis from "moralis";
-import { useParams } from "react-router-dom";
-import { useAccount } from "wagmi";
-import { useNavigate } from "react-router-dom";
+import { contractABI, contractAddress } from "../../Utils/constants";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  useAccount,
+  useContractReads,
+  usePrepareContractWrite,
+  useContractWrite,
+} from "wagmi";
+//import { useNavigate } from "react-router-dom";
 //import fs from "fs";
-import { useTradeGuideContext } from "../../request/provider";
 
 const Profile = () => {
+  const { id } = useParams();
+  const { isDisconnected, address } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
+  const [postLink, setPostLink] = useState("");
 
   //Set Profile Image and Name
   const [name, setName] = useState("Andy Horwitz");
+  const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState();
   const [faceBook, setFaceBook] = useState("https://www.facebook.com");
   const [twitter, setTwitter] = useState("https://www.twitter.com");
   const [skype, setSkype] = useState("https://www.skype.com");
   const [location, setLocation] = useState("New York");
-
+  const [imageCid, setImageCid] = useState("");
   // React state to control Modal visibility
   const [showModal, setShowModal] = useState(false);
   const [start, setStart] = useState(true);
-  const { id } = useParams();
+  const readContract = {
+    address: contractAddress,
+    abi: contractABI,
+  };
 
-  //const { setProfile, getProfile } = useTradeGuideContext();
+  const {
+    data,
+    isLoading,
+    error: readsError,
+  } = useContractReads({
+    contracts: [
+      {
+        ...readContract,
+        functionName: "getProfile",
+        args: [id],
+      },
+      {
+        ...readContract,
+        functionName: "getSubcribers",
+        args: [id],
+      },
+      {
+        ...readContract,
+        functionName: "getNoSubscribers",
+        args: [id],
+      },
+      {
+        ...readContract,
+        functionName: "getNoTrades",
+        args: [id],
+      },
+      {
+        ...readContract,
+        functionName: "getPosts",
+        args: [id],
+      },
+      {
+        ...readContract,
+        functionName: "getSubscribersFee",
+        args: [id],
+      },
+    ],
+  });
+
+  // console.log(data[0].result);
+  // console.log(data[1].result);
+  // console.log(data[2].result);
+  //console.log(parseInt(data[3].result));
+
+  const { config: addPost, error: postError } = usePrepareContractWrite({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "addAPost",
+    args: [postLink],
+  });
+  const { write: addAPost } = useContractWrite(addPost);
+
+  const { config, error } = usePrepareContractWrite({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "setUserProfile",
+    args: [imageCid],
+  });
+
+  const { write } = useContractWrite(config);
 
   // Backdrop JSX code
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
@@ -56,6 +127,15 @@ const Profile = () => {
     if (!Open) {
       e.currentTarget.innerText = "Subscribe";
     }
+  };
+  const handlePost = async (file, desc) => {
+    let typeF;
+    if (file == undefined) {
+      typeF = "text";
+    } else {
+      typeF = file.type;
+    }
+    await uploadPost(file, desc, typeF);
   };
   const moralis = async () => {
     try {
@@ -86,7 +166,7 @@ const Profile = () => {
     });
     console.log((await response).result);
     const cid = (await response).result[0].path;
-    //saveFiles(cid);
+    saveFiles(cid);
   };
 
   const saveFiles = async (imageLink) => {
@@ -111,13 +191,68 @@ const Profile = () => {
 
     console.log((await response).result);
     const cid = (await response).result[0].path;
-    //await setProfile(cid);
+    setImageCid(cid);
+    await write();
+    getFiles(cid);
   };
 
-  const getFiles = async () => {
-    //const url = await getProfile(id);
-    //const res = await fetch(url)
-    //console.log(res[0])
+  const getFiles = async (url) => {
+    const res = await fetch(url);
+    const result = await res.json();
+    setImageUrl(result.image);
+    setName(result.name);
+    setLocation(result.location);
+    setFaceBook(result.social_Media.faceBook);
+    setSkype(result.social_Media.skype);
+    setTwitter(result.social_Media.twitter);
+  };
+
+  const uploadPost = async (file, descriptionPost, typeOfContent) => {
+    moralis();
+
+    if (file == undefined) {
+      _addpost("", descriptionPost, typeOfContent);
+    } else {
+      const uploadArray = [
+        {
+          path: file.name,
+          content: file,
+          //fs.readFile(file, { encoding: "base64" }),
+        },
+      ];
+
+      const response = Moralis.EvmApi.ipfs.uploadFolder({
+        abi: uploadArray,
+      });
+      console.log((await response).result);
+      const cid = (await response).result[0].path;
+      _addpost(cid, descriptionPost, typeOfContent);
+    }
+  };
+  const _addpost = async (contentLink, descriptionPost, typeContent) => {
+    moralis();
+
+    const uploadArray = [
+      {
+        path: "userPost.json",
+        content: {
+          description: descriptionPost,
+          timeStamp: new Date().toDateString(),
+          fileUpload: {
+            type: typeContent,
+            mainContent: contentLink,
+          },
+        }, //fs.readFile(file, { encoding: "base64" }),
+      },
+    ];
+
+    const response = Moralis.EvmApi.ipfs.uploadFolder({
+      abi: uploadArray,
+    });
+    console.log((await response).result);
+    const cid = (await response).result[0].path;
+    setPostLink(cid);
+    await addAPost();
   };
 
   const handleChange = () => {
@@ -128,8 +263,14 @@ const Profile = () => {
   Open = subOpen;
 
   //if user disconnects, this takes them back to home page
-  const { isDisconnected } = useAccount();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    // console.log(data)
+    if (data[0].result !== "") {
+      getFiles(data[0].result);
+    }
+  }, [data]);
   useEffect(() => {
     if (isDisconnected) {
       navigate("/");
@@ -163,8 +304,13 @@ const Profile = () => {
                     className="ms-4 mt-5 d-flex flex-column"
                     style={{ width: "150px" }}
                   >
-                    {image != undefined ? (
-                      <img />
+                    {imageUrl != undefined && "" ? (
+                      <img
+                        src={imageUrl}
+                        alt="profile-picture"
+                        className="img-fluid img-thumbnail mt-4 mb-2"
+                        style={{ width: "150px", zIndex: "1" }}
+                      />
                     ) : (
                       <img
                         src={defImage}
@@ -431,11 +577,21 @@ const Profile = () => {
                 >
                   <div className="d-flex justify-content-end text-center py-1">
                     <div>
-                      <p className="mb-1 h5">53</p>
+                      <p className="mb-1 h5">
+                        {data[4].result.length > 0 &&
+                        data[4].result != undefined
+                          ? data[4].result.length
+                          : 12}
+                      </p>
                       <p className="small text-muted mb-0">Posts</p>
                     </div>
                     <div className="px-3">
-                      <p className="mb-1 h5">1026</p>
+                      <p className="mb-1 h5">
+                        {parseInt(data[2].result) > 0 &&
+                        parseInt(data[2].result) != undefined
+                          ? parseInt(data[2].result)
+                          : 40}
+                      </p>
                       <p className="small text-muted mb-0">Subscribers</p>
                     </div>
                     <div>
@@ -520,13 +676,13 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <Input />
+          <Input handlePost={handlePost} uploadPost={uploadPost} />
           <hr />
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {Open ? <Feed id={id} /> : ""}
-      {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
+      {data[1].result.includes(address) ? <Feed id={id} /> : ""}
+      {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} id={id} /> : ""}
     </>
   );
 };

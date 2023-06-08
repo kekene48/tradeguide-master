@@ -1,55 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 import "./Feed.scss";
 import "../bootstrap.min.css";
-//import { useTradeGuideContext } from "../request/provider";
-import { useAccount } from "wagmi";
+import { contractABI, contractAddress } from "../Utils/constants";
+import {
+  useAccount,
+  useContractWrite,
+  useContractRead,
+  usePrepareContractWrite,
+} from "wagmi";
 import Moralis from "moralis";
 
-const Feed = ({ id }) => {
+const Feed = ({ id, url }) => {
   const [start, setStart] = React.useState(true);
+
   const { address } = useAccount();
-  //const { getPosts, addPost } = useTradeGuideContext();
 
-  // const moralis = async () => {
-  //   try {
-  //     if (start) {
-  //       await Moralis.start({
-  //         apiKey: process.env.REACT_APP_MORALIS_API,
-  //       });
+  const {
+    data: posts,
+    error,
+    isLoading,
+  } = useContractRead({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "getPosts",
+    args: [id],
+  });
 
-  //       setStart(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const _addpost = async (file) => {
-  //   moralis();
+ 
+  const moralis = async () => {
+    try {
+      if (start) {
+        await Moralis.start({
+          apiKey: process.env.REACT_APP_MORALIS_API,
+        });
 
-  //   const uploadArray = [
-  //     {
-  //       path: file.name,
-  //       content: file, //fs.readFile(file, { encoding: "base64" }),
-  //     },
-  //   ];
+        setStart(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ 
+  const _getPost = async () => {
+    const postArray = [];
+    const _posts = posts;
+    _posts.forEach(async (post) => {
+      const res = await fetch(post);
+      const result = await res.json();
+      postArray.push(result);
+    });
+  };
 
-  //   const response = Moralis.EvmApi.ipfs.uploadFolder({
-  //     abi: uploadArray,
-  //   });
-  //   console.log((await response).result);
-  //   const cid = (await response).result[0].path;
-  //   await addPost(cid);
-  // };
-  // const _getPost = async () => {
-  //   const postArray = [];
-  //   const posts = await getPosts();
-  //   posts.forEach(async (post) => {
-  //     const res = await fetch(post);
-  //     const result = await res.json();
-  //     postArray.push(result);
-  //   });
-  // };
+  useEffect(() => {
+    _getPost();
+  }, []);
+
   return (
     <>
       <div className="container mt-4 mb-5">
@@ -62,7 +68,7 @@ const Feed = ({ id }) => {
                     <div className="d-flex flex-row align-items-center feed-text px-2">
                       <img
                         className="rounded-circle"
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                        src={url}
                         width="45"
                         style={{ marginRight: "1rem" }}
                       />

@@ -1,7 +1,7 @@
 import { providers, Contract } from "ethers";
 import { useContext, createContext } from "react";
 import { contractABI, contractAddress } from "../Utils/constants";
-import * as PushAPI from "@pushprotocol/restapi";
+
 import qs from "qs";
 
 const TradeGuideContext = createContext();
@@ -34,30 +34,11 @@ export const Provider = ({ children }) => {
         { headers }
       );
       console.log(await response.json());
-    } catch (error) {}
-  };
-
-  const subscribeToNotif = async (userAddress) => {
-    const provider = new providers.Web3Provider(ethereum);
-    const _signer = provider.getSigner();
-
-    try {
-      await PushAPI.channels.subscribe({
-        signer: _signer,
-        channelAddress: `eip155:5:${channelAddress}`, // channel address in CAIP
-        userAddress: `eip155:5:${userAddress}`, // user address in CAIP
-        onSuccess: () => {
-          console.log("opt in success");
-        },
-        onError: () => {
-          console.error("opt in error");
-        },
-        env: "staging",
-      });
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
+
 
   const performSwap = async (tokenIn, tokenOut, amountIn) => {
     try {
@@ -98,38 +79,11 @@ export const Provider = ({ children }) => {
     }
   };
 
-  const subscribe = async (to) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _subscribe = await tradeGuideContract.subscribe(to);
-      const response = await _subscribe.wait();
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const setProfile = async (link) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _setprofile = await tradeGuideContract.setUserProfile(link);
-      const res = await _setprofile.wait();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const setFee = async (user, fee) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _setFee = await tradeGuideContract.setSubscribersFee(fee, user);
-      const res = await _setFee.wait();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+
+ 
 
   const addPost = async (link) => {
     try {
@@ -144,15 +98,6 @@ export const Provider = ({ children }) => {
 
   //_________________________Read Functions ________________________________
 
-  const getTrades = async () => {
-    try {
-      const tradeGuideContract = getContract();
-      const _getTrades = await tradeGuideContract.getTrades();
-      return _getTrades;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const getPosts = async () => {
     try {
       const tradeGuideContract = getContract();
@@ -163,44 +108,11 @@ export const Provider = ({ children }) => {
     }
   };
 
-  const getProfile = async (user) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _userProfile = await tradeGuideContract.getProfile(user);
-      return _userProfile;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
-  const getSubscribers = async (user) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _subscribers = await tradeGuideContract.getSubcribers(user);
-      return _subscribers;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
-  const getNoSubscribers = async (user) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _getNoSubscribers = await tradeGuideContract.getNoSubscribers(user);
-      return _getNoSubscribers;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getNoTrades = async (user) => {
-    try {
-      const tradeGuideContract = getContract();
-      const _getNoTrades = await tradeGuideContract.getNoTrades(user);
-      return _getNoTrades;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
   const getTotaltrades = async (user) => {
     try {
@@ -217,16 +129,7 @@ export const Provider = ({ children }) => {
       value={{
         performSwap,
         performSwapWithTPSL,
-        subscribe,
-        setFee,
-        getProfile,
-        getSubscribers,
-        getTrades,
-        setProfile,
-        getNoSubscribers,
-        getNoTrades,
         getTotaltrades,
-        subscribeToNotif,
         getQuote,
         getPosts,
         addPost,

@@ -1,19 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Sidebar";
 import "./Trades.scss";
 import Top from "../../Top";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
-//import { useTradeGuideContext } from "../../../request/provider";
+import { contractABI, contractAddress } from "../../../Utils/constants";
 import { trades } from "../../../Utils/Data";
-import { useAccount } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { useNavigate } from "react-router-dom";
 
 const Trades = () => {
-  // const { getTrades } = useTradeGuideContext();
+  const [tradeData, setTradeData] = useState([]);
   const completeOrNot = () => {
     return Math.round(Math.random());
   };
+  // const calculatepl = () => {
+
+  // }
+
+  const {
+    data: tradesData,
+    isLoading: tradeDataLoading,
+    error: tradesDataError,
+  } = useContractRead({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "getTrades",
+  });
+  const structuredTradeData = tradesData.map((trade) => ({
+    timestamp: new Date(trade.timestamp.toNumber() * 1000).toLocaleString(),
+    trader_id: trade.trader,
+    token: trade.tokenBought,
+    buy_price: trade.buyPrice,
+    sl_tp: `${trade.sl.toString()} / ${trade.tp.toString()}`,
+    state: trade._tradeState,
+    upkeepId: trade.upkeepID,
+  }));
+  //console.log(tradesData)
+  //console.log(structuredTradeData)
 
   const icons = [
     <AiOutlineDash style={{ fontSize: "1.5rem" }} />,
@@ -24,6 +48,8 @@ const Trades = () => {
   const { isDisconnected } = useAccount();
   const navigate = useNavigate();
   useEffect(() => {
+    setTradeData(structuredTradeData);
+    //setTradeData(tradesData)
     if (isDisconnected) {
       navigate("/");
     }
@@ -49,7 +75,7 @@ const Trades = () => {
             </tr>
           </thead>
           <tbody>
-            {trades.map((trade) => (
+            {[...tradeData, ...trades].reverse().map((trade) => (
               <tr>
                 <td>{trade.id}</td>
                 <td>{trade.timestamp}</td>
