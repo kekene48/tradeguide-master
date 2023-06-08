@@ -1,0 +1,33 @@
+.topTrade_main {
+    flex-direction: column;
+}
+
+.trade_info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: 50vh;
+    position: relative;
+    left: 45%;
+    width: 500px;
+    margin-top: 5rem;
+    gap: 4rem;
+    text-align: center;
+
+    &-icon > p {
+        background: #3559e5;
+        padding: 1rem;
+        border-radius: .5rem;
+        color: white;
+    }
+}
+
+.automation_info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat((2, 1fr));
+    position: relative;
+    left: 45%;
+    column-gap: 3rem;
+    text-align: center;
+}

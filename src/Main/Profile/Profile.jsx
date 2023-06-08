@@ -21,6 +21,7 @@ import {
 } from "wagmi";
 //import { useNavigate } from "react-router-dom";
 //import fs from "fs";
+// import { useTradeGuideContext } from "../../request/provider";
 
 const Profile = () => {
   const { id } = useParams();

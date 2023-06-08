@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
 import { trades } from "../Utils/Data";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   const { isConnecting, isDisconnected } = useAccount();
@@ -41,8 +42,8 @@ const Main = () => {
         style={{
           position: "absolute",
           left: "23.9rem",
-          top: "50rem",
-          zIndex: "-1",
+          top: "55rem",
+          zIndex: "1041",
         }}
       >
         <thead>
@@ -63,7 +64,9 @@ const Main = () => {
             <tr>
               <td>{trade.id}</td>
               <td>{trade.timestamp}</td>
-              <td>{trade.trader_id}</td>
+              <Link to={`/toptrades?${trade.id}-9InrNkZropk`}>
+                <td>{trade.trader_id}</td>
+              </Link>
               <td>{trade.token}</td>
               <td>{trade.buy_price}</td>
               <td>{trade.amount}</td>
