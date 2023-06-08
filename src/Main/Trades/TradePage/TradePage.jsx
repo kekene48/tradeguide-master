@@ -21,6 +21,8 @@ const TradePage = () => {
   const [showResult, setShowResult] = useState(false);
   const [start, setStart] = useState(true);
   const [result, setResult] = useState([]);
+  const [selectedValue1, setSelectedValue1] = useState(3);
+  const [selectedValue2, setSelectedValue2] = useState(3);
 
   const moralis = async () => {
     try {
@@ -99,21 +101,7 @@ const TradePage = () => {
   });
 
   //initialize the variables that would hold the coins
-  let coinOne, coinTwo;
-
-  const handleChange = (e) => {
-    //if statement to know which option button is selected and store the names of the coins
-    if (e.currentTarget.id === "custom-select-swap-1") {
-      coinOne = targetValue1.current.value;
-    }
-
-    if (e.currentTarget.id === "custom-select-swap-2") {
-      coinTwo = targetValue2.current.value;
-    }
-
-    return coinOne, coinTwo;
-  };
-
+  let coinOne, coinTwo, tokenAmount;
   const handleClick = () => {
     setRadio(!radio);
   };
@@ -128,12 +116,20 @@ const TradePage = () => {
     <>
       <div className="swap">
         <div className="swap-1 swap-card">
-          <input type="text" placeholder="0" />
+          <input
+            type="text"
+            placeholder="0"
+            onChange={(e) => (tokenAmount = e.currentTarget.value)}
+          />
           <div className="container">
             <div className="custom-select mt-5 m-auto w-75">
               <Select
                 id="custom-select-swap-1"
-                // onChange={(e) => e.currentTarget.value}
+                onChange={(e) => {
+                  setSelectedValue1(e.value);
+                  coinOne = e.value;
+                  console.log(coinOne);
+                }}
                 defaultValue={options1[1]}
                 ref={targetValue1}
                 options={options1}
@@ -151,7 +147,11 @@ const TradePage = () => {
               <Select
                 id="custom-select-swap-2"
                 defaultValue={options2[1]}
-                // onChange={(e) => (coinOne = e.currentTarget.value)}
+                onChange={(e) => {
+                  setSelectedValue2(e.value);
+                  coinTwo = e.value;
+                  console.log(coinTwo);
+                }}
                 ref={targetValue2}
                 options={options2}
               />
