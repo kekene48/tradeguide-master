@@ -7,7 +7,7 @@ import { AiOutlineDash } from "react-icons/ai";
 import { contractABI, contractAddress } from "../../../Utils/constants";
 import { trades } from "../../../Utils/Data";
 import { useAccount, useContractRead } from "wagmi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Trades = () => {
   const [tradeData, setTradeData] = useState([]);
@@ -32,11 +32,13 @@ const Trades = () => {
     trader_id: trade.trader,
     token: trade.tokenBought,
     buy_price: trade.buyPrice,
+    id: trade.index,
     sl_tp: `${trade.sl.toString()} / ${trade.tp.toString()}`,
     state: trade._tradeState,
+    amount: trade.amount,
     upkeepId: trade.upkeepID,
   }));
-  console.log(tradesData)
+  console.log(tradesData);
   //console.log(structuredTradeData)
 
   const icons = [
@@ -79,7 +81,9 @@ const Trades = () => {
               <tr>
                 <td>{trade.id}</td>
                 <td>{trade.timestamp}</td>
-                <td>{trade.trader_id}</td>
+                <td>
+                  <Link to={`/toptrades/${trade.id}`}>{trade.trader_id}</Link>
+                </td>
                 <td>{trade.token}</td>
                 <td>{trade.buy_price}</td>
                 <td>{trade.amount}</td>

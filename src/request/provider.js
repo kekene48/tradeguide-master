@@ -39,7 +39,7 @@ export const Provider = ({ children }) => {
   const performSwapWithTPSL = async (
     tp,
     sl,
-    _amountLink,
+    //_amountLink,
     amountIn,
     tokenIn,
     tokenOut

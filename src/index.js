@@ -66,7 +66,7 @@ const router = createBrowserRouter([
     element: <Profile />
   },
   {
-    path: "/toptrades",
+    path: "/toptrades/:index",
     element: <TopTrades />,
   },
 ]);
