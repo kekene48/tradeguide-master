@@ -153,7 +153,7 @@ const TradePage = () => {
           <input
             type="text"
             placeholder="0"
-            // onChange={(e) => (tokenAmount = e.currentTarget.value)}
+            onChange={(e) => (tokenAmount = e.currentTarget.value)}
           />
           <div className="container">
             <div className="custom-select mt-5 m-auto w-75">
