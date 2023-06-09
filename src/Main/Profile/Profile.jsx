@@ -19,7 +19,6 @@ import {
   usePrepareContractWrite,
   useContractWrite,
 } from "wagmi";
-//import { useNavigate } from "react-router-dom";
 //import fs from "fs";
 // import { useTradeGuideContext } from "../../request/provider";
 
@@ -86,7 +85,8 @@ const Profile = () => {
     ],
   });
 
-  // console.log(data[0].result);
+  console.log(data[0].result);
+  console.log(readsError);
   // console.log(data[1].result);
   // console.log(data[2].result);
   //console.log(parseInt(data[3].result));
@@ -267,11 +267,11 @@ const Profile = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    // console.log(data)
+    console.log(data);
     if (data[0].result !== "") {
       getFiles(data[0].result);
     }
-  }, [data]);
+  }, []);
   useEffect(() => {
     if (isDisconnected) {
       navigate("/");

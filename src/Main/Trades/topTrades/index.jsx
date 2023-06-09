@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../Sidebar";
 import "./TopTrades.scss";
 import "../../../bootstrap.min.css";
 import Top from "../../Top";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const completeOrNot = () => {
     return Math.round(Math.random());
   };
+
+  //if user disconnects, this takes them back to home page
+  const { isConnecting, isDisconnected } = useAccount();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isDisconnected) {
+      navigate("/");
+    }
+  }, [isDisconnected]);
+
   const icons = [
     <AiOutlineDash style={{ fontSize: "1.5rem" }} />,
     <FiCheckCircle style={{ color: "white", fontSize: "1.5rem" }} />,

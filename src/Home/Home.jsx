@@ -38,6 +38,25 @@ function Home() {
           <Link to="" className="app__btn">
             <ConnectButton label="Get started" />
           </Link>
+
+          <div className="achievements">
+            <div className="achievements-div">
+              <h1>1245+</h1>
+              <p>Happy Clients</p>
+            </div>
+            <div className="achievements-div">
+              <h1>100+</h1>
+              <p>Completed Trades</p>
+            </div>
+            <div className="achievements-div">
+              <h1>5146+</h1>
+              <p>Professional Traders</p>
+            </div>
+            <div className="achievements-div">
+              <h1>50,000 +</h1>
+              <p>Users</p>
+            </div>
+          </div>
         </main>
 
         {/* SPONSORS */}
