@@ -165,7 +165,6 @@ const TradePage = () => {
 
   //initialize the variables that would hold the coins
   let coinOne, coinTwo, tokenAmount;
-
   const handleClick = () => {
     setRadio(!radio);
   };

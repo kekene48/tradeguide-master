@@ -7,7 +7,7 @@ $color-black: #000;
 .app {
   
   &__main {
-    height: 70vh;
+    height: 80vh;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     display: flex;
@@ -81,6 +81,23 @@ $color-black: #000;
     transition-delay: .1s;
   }
 }
+
+.achievements {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  &-div > h1 {
+    color: white;
+  }
+
+    &-div>p {
+      color: gainsboro;
+    }
+}
+
 ///////////////////SPONSORS ////////////////////////  
 .sponsors {
   background-color: #fccb06;
