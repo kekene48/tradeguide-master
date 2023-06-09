@@ -20,11 +20,6 @@ import {
   usePrepareContractWrite,
   useContractWrite,
 } from "wagmi";
-<<<<<<< HEAD
-//import fs from "fs";
-// import { useTradeGuideContext } from "../../request/provider";
-=======
->>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
 
 const Profile = () => {
   const { id } = useParams();
@@ -95,15 +90,9 @@ const Profile = () => {
       },
     ],
   });
-<<<<<<< HEAD
-
-  console.log(data[0].result);
-  console.log(readsError);
-=======
   //console.log(data);
   //console.log(readsError);
   // console.log(data[0].result);
->>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
   // console.log(data[1].result);
   // console.log(data[2].result);
   //console.log(parseInt(data[3].result));
@@ -286,19 +275,11 @@ const Profile = () => {
   useEffect(() => {}, []);
 
   useEffect(() => {
-<<<<<<< HEAD
-    console.log(data);
-    if (data[0].result !== "") {
-      getFiles(data[0].result);
-    }
-  }, []);
-=======
     //console.log(data);
     if (url !== "") {
       getFiles(url);
     }
   }, [id]);
->>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
   useEffect(() => {
     setUrl(data[0].result);
     setNoOfPosts(data[4].result.length);

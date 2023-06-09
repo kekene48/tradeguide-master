@@ -87,7 +87,7 @@ const TradePage = () => {
   //options in the Select from wallet data call to get tokens and balances
   const options1 = result.map((token) => {
     console.log(token);
-    setTokenSell(token);
+    //setTokenSell(token);
     return {
       value: token.name,
       label: (
@@ -114,7 +114,7 @@ const TradePage = () => {
   });
 
   const options2 = data.map((token) => {
-    setTokenBuy(token);
+    //setTokenBuy(token);
     return {
       value: token.name,
       label: (
@@ -135,7 +135,7 @@ const TradePage = () => {
   });
 
   //initialize the variables that would hold the coins
- let coinOne, coinTwo, tokenAmount;
+  let coinOne, coinTwo, tokenAmount;
   const handleClick = () => {
     setRadio(!radio);
   };
