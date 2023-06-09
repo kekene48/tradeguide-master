@@ -12,6 +12,7 @@ import Input from "../../Feeds/Input";
 import Top from "../Top";
 import Moralis from "moralis";
 import { contractABI, contractAddress } from "../../Utils/constants";
+
 import { useParams, useNavigate } from "react-router-dom";
 import {
   useAccount,
@@ -19,15 +20,25 @@ import {
   usePrepareContractWrite,
   useContractWrite,
 } from "wagmi";
+<<<<<<< HEAD
 //import fs from "fs";
 // import { useTradeGuideContext } from "../../request/provider";
+=======
+>>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
 
 const Profile = () => {
   const { id } = useParams();
+  // const { getPosts } = useTradeGuideContext();
+  // console.log(getPosts);
+
   const { isDisconnected, address } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
   const [postLink, setPostLink] = useState("");
+  const [noOfPosts, setNoOfPosts] = useState(12);
+  const [noOfSubs, setNoOfSubs] = useState(13);
+  const [subscribers, setSubscribers] = useState([]);
+  const [url, setUrl] = useState("");
 
   //Set Profile Image and Name
   const [name, setName] = useState("Andy Horwitz");
@@ -84,9 +95,15 @@ const Profile = () => {
       },
     ],
   });
+<<<<<<< HEAD
 
   console.log(data[0].result);
   console.log(readsError);
+=======
+  //console.log(data);
+  //console.log(readsError);
+  // console.log(data[0].result);
+>>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
   // console.log(data[1].result);
   // console.log(data[2].result);
   //console.log(parseInt(data[3].result));
@@ -121,11 +138,11 @@ const Profile = () => {
     setIsOpen(!isOpen);
     setSubOpen(!subOpen);
     Open = subOpen;
-    if (Open) {
-      e.currentTarget.innerText = "Unsubscribe";
-    }
-
-    if (!Open) {
+    if (id == address) {
+      e.currentTarget.innerText = "Change Fee";
+    } else if (subscribers.includes(address)) {
+      e.currentTarget.innerText = "Subscribed";
+    } else {
       e.currentTarget.innerText = "Subscribe";
     }
   };
@@ -266,13 +283,27 @@ const Profile = () => {
   //if user disconnects, this takes them back to home page
 
   const navigate = useNavigate();
+  useEffect(() => {}, []);
+
   useEffect(() => {
+<<<<<<< HEAD
     console.log(data);
     if (data[0].result !== "") {
       getFiles(data[0].result);
     }
   }, []);
+=======
+    //console.log(data);
+    if (url !== "") {
+      getFiles(url);
+    }
+  }, [id]);
+>>>>>>> 65c920d75af101900a74a8eb67530d6c57012e2f
   useEffect(() => {
+    setUrl(data[0].result);
+    setNoOfPosts(data[4].result.length);
+    setNoOfSubs(parseInt(data[2]?.result));
+    setSubscribers(data[1]?.result);
     if (isDisconnected) {
       navigate("/");
     }
@@ -339,7 +370,9 @@ const Profile = () => {
                     >
                       <div>
                         <div className="modal-header">
-                          <div className="modal-title">Modal Heading</div>
+                          <div className="modal-title">
+                            Change Profile Details
+                          </div>
                           <div>
                             <span
                               className="close-button"
@@ -579,19 +612,15 @@ const Profile = () => {
                   <div className="d-flex justify-content-end text-center py-1">
                     <div>
                       <p className="mb-1 h5">
-                        {data[4].result.length > 0 &&
-                        data[4].result != undefined
-                          ? data[4].result.length
+                        {noOfPosts > 0 && noOfPosts != undefined
+                          ? noOfPosts
                           : 12}
                       </p>
                       <p className="small text-muted mb-0">Posts</p>
                     </div>
                     <div className="px-3">
                       <p className="mb-1 h5">
-                        {parseInt(data[2].result) > 0 &&
-                        parseInt(data[2].result) != undefined
-                          ? parseInt(data[2].result)
-                          : 40}
+                        {noOfSubs > 0 && noOfSubs != undefined ? noOfSubs : 40}
                       </p>
                       <p className="small text-muted mb-0">Subscribers</p>
                     </div>
@@ -682,7 +711,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {data[1].result.includes(address) ? <Feed id={id} /> : ""}
+      {subscribers.includes(address) ? <Feed id={id} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} id={id} /> : ""}
     </>
   );

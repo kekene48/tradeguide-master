@@ -27,7 +27,7 @@ const Trades = () => {
     address: contractAddress,
     functionName: "getTrades",
   });
-  const structuredTradeData = tradesData.map((trade) => ({
+  const structuredTradeData = tradesData?.map((trade) => ({
     timestamp: new Date(trade.timestamp.toNumber() * 1000).toLocaleString(),
     trader_id: trade.trader,
     token: trade.tokenBought,
@@ -36,7 +36,7 @@ const Trades = () => {
     state: trade._tradeState,
     upkeepId: trade.upkeepID,
   }));
-  //console.log(tradesData)
+  console.log(tradesData)
   //console.log(structuredTradeData)
 
   const icons = [
