@@ -46,12 +46,9 @@ const Modale = ({ isOpen, setIsOpen, id }) => {
     args: [id],
     onSuccess(data) {
       console.log(data);
-      subscribeToNotif();
-      setIsOpen(false);
-    },
-    onError(error) {
-      console.log("Error", error);
-    },
+      // subscribeToNotif();
+      // setIsOpen(false);
+    }
   });
 
   const { write: feeWrite } = useContractWrite(feeConfig);

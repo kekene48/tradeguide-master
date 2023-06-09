@@ -19,25 +19,7 @@ const getContract = () => {
 };
 
 export const Provider = ({ children }) => {
-  const getQuote = async (_tokenS, _tokenB, amount) => {
-    try {
-      const params = {
-        sellToken: _tokenS,
-        buyToken: _tokenB,
-        // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
-        sellAmount: amount,
-      };
-
-      const headers = { "0x-api-key": process.env.REACT_APP_OXAPI_KEY };
-      const response = await fetch(
-        `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-        { headers }
-      );
-      console.log(await response.json());
-    } catch (error) {
-      console.log(error)
-    }
-  };
+ 
 
 
   const performSwap = async (tokenIn, tokenOut, amountIn) => {

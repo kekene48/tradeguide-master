@@ -6,6 +6,7 @@ import Select from "react-select";
 import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
 import { data } from "../../../Utils/Data";
+import qs from "qs";
 
 import { utils } from "ethers";
 
@@ -23,6 +24,9 @@ const TradePage = () => {
   const [result, setResult] = useState([]);
   const [selectedValue1, setSelectedValue1] = useState(3);
   const [selectedValue2, setSelectedValue2] = useState(3);
+  const [buyAmount, setBuyAMount] = useState(0);
+  const [tokenSell, setTokenSell] = useState();
+  const [tokenBuy, setTokenBuy] = useState();
 
   const moralis = async () => {
     try {
@@ -52,9 +56,38 @@ const TradePage = () => {
   };
   //End of web3 API call
 
+  const getQuote = async (
+    _tokenS,
+    _tokenB,
+    amount,
+    sellDecimal,
+    buyDecimal
+  ) => {
+    try {
+      const params = {
+        sellToken: _tokenS,
+        buyToken: _tokenB,
+        // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
+        sellAmount: amount * 10 ** sellDecimal,
+      };
+
+      const headers = { "0x-api-key": process.env.REACT_APP_OXAPI_KEY };
+      const response = await fetch(
+        `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+        { headers }
+      );
+      console.log(await response.json());
+      const result = await response.json();
+      setBuyAMount(result.buyAmount / 10 ** buyDecimal);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //options in the Select from wallet data call to get tokens and balances
   const options1 = result.map((token) => {
     console.log(token);
+    setTokenSell(token);
     return {
       value: token.name,
       label: (
@@ -81,6 +114,7 @@ const TradePage = () => {
   });
 
   const options2 = data.map((token) => {
+    setTokenBuy(token);
     return {
       value: token.name,
       label: (
@@ -101,7 +135,7 @@ const TradePage = () => {
   });
 
   //initialize the variables that would hold the coins
-  let coinOne, coinTwo, tokenAmount;
+ let coinOne, coinTwo, tokenAmount;
   const handleClick = () => {
     setRadio(!radio);
   };
@@ -119,7 +153,7 @@ const TradePage = () => {
           <input
             type="text"
             placeholder="0"
-            onChange={(e) => (tokenAmount = e.currentTarget.value)}
+            // onChange={(e) => (tokenAmount = e.currentTarget.value)}
           />
           <div className="container">
             <div className="custom-select mt-5 m-auto w-75">
@@ -141,7 +175,17 @@ const TradePage = () => {
           <AiOutlineSwap style={{ width: "2.5rem", height: "1.5rem" }} />
         </div>
         <div className="swap-2 swap-card">
-          <input type="text" placeholder="0" />
+          <input
+            type="text"
+            placeholder="0"
+            // value={getQuote(
+            //   tokenSell.address,
+            //   tokenBuy.address,
+            //   tokenAmount,
+            //   tokenSell.decimal,
+            //   tokenBuy.decimal
+            // )}
+          />
           <div className="container">
             <div className="custom-select mt-5 m-auto w-75">
               <Select

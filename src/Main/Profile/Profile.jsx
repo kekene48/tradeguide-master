@@ -33,6 +33,7 @@ const Profile = () => {
   const [noOfPosts, setNoOfPosts] = useState(12);
   const [noOfSubs, setNoOfSubs] = useState(13);
   const [subscribers, setSubscribers] = useState([]);
+  const [url, setUrl] = useState("");
 
   //Set Profile Image and Name
   const [name, setName] = useState("Andy Horwitz");
@@ -126,11 +127,11 @@ const Profile = () => {
     setIsOpen(!isOpen);
     setSubOpen(!subOpen);
     Open = subOpen;
-    if (Open) {
-      e.currentTarget.innerText = "Unsubscribe";
-    }
-
-    if (!Open) {
+    if (id == address) {
+      e.currentTarget.innerText = "Change Fee";
+    } else if (subscribers.includes(address)) {
+      e.currentTarget.innerText = "Subscribed";
+    } else {
       e.currentTarget.innerText = "Subscribe";
     }
   };
@@ -275,11 +276,12 @@ const Profile = () => {
 
   useEffect(() => {
     //console.log(data);
-    if (data[0].result !== "") {
-      getFiles(data[0].result);
+    if (url !== "") {
+      getFiles(url);
     }
   }, [id]);
   useEffect(() => {
+    setUrl(data[0].result);
     setNoOfPosts(data[4].result.length);
     setNoOfSubs(parseInt(data[2]?.result));
     setSubscribers(data[1]?.result);
@@ -349,7 +351,9 @@ const Profile = () => {
                     >
                       <div>
                         <div className="modal-header">
-                          <div className="modal-title">Modal Heading</div>
+                          <div className="modal-title">
+                            Change Profile Details
+                          </div>
                           <div>
                             <span
                               className="close-button"
