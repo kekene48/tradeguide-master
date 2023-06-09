@@ -31,7 +31,7 @@ export const trades = [
     amount: 4.28,
     sl_tp: "1233 / 3333",
     pl: 3.5,
-    state: 1
+    state: 1,
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ export const trades = [
     amount: 1.49,
     sl_tp: "1233 / 3333",
     pl: 3.5,
-    state: 0
+    state: 0,
   },
   {
     id: 3,
@@ -53,8 +53,7 @@ export const trades = [
     amount: 1.4,
     sl_tp: "1233 / 3333",
     pl: 3.5,
-    state: 1
-
+    state: 1,
   },
   {
     id: 4,
@@ -65,7 +64,7 @@ export const trades = [
     amount: 0.5,
     sl_tp: "1233 / 3333",
     pl: 3.5,
-    state: 0
+    state: 0,
   },
 ];
 
@@ -97,13 +96,15 @@ export const traders = [
 ];
 export const posts = [
   {
-    timestamp: '',
+    timestamp: "40 minutes",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magnaaliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     type: "image/webp",
-    contentUrl: ""
-    
+    contentUrl: "",
   },
   {
-
-  }
-]
+    timestamp: "40 minutes",
+    desc: "",
+    type: "video/mp4",
+    contentUrl: "https://youtu.be/gKylTRnaFsk",
+  },
+];

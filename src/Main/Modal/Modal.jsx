@@ -11,11 +11,11 @@ import {
   useWalletClient,
 } from "wagmi";
 
-
 const Modale = ({ isOpen, setIsOpen, id }) => {
   // Backdrop JSX code
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
   const [feeValue, setfeeValue] = useState(0);
+  const [feeValueCon, setfeeValueCon] = useState(20);
 
   const { address } = useAccount();
   const {
@@ -23,9 +23,8 @@ const Modale = ({ isOpen, setIsOpen, id }) => {
     isError,
     isLoading: clientLoading,
   } = useWalletClient();
-if(feeValue > 0 ) {
-  
-}
+  if (feeValue > 0) {
+  }
   const { config: feeConfig, error } = usePrepareContractWrite({
     abi: contractABI,
     address: contractAddress,
@@ -36,7 +35,6 @@ if(feeValue > 0 ) {
     },
     onSuccess(data) {
       //console.log(data);
-      subscribeToNotif();
       setIsOpen(false);
     },
   });
@@ -48,6 +46,7 @@ if(feeValue > 0 ) {
     args: [id],
     onSuccess(data) {
       console.log(data);
+      subscribeToNotif();
       setIsOpen(false);
     },
     onError(error) {
@@ -87,13 +86,15 @@ if(feeValue > 0 ) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    setfeeValueCon(parseInt(getFee));
+  }, []);
 
   useEffect(() => {
-    if(feeValue > 0){
-      feeConfig()
+    if (feeValue > 0) {
+      feeConfig();
     }
-  }, [feeValue])
-  
+  }, [feeValue]);
 
   return (
     <div className="modal-example">
@@ -135,7 +136,7 @@ if(feeValue > 0 ) {
                   required
                 />
                 <label className="form-check-label" htmlFor="subfee">
-                  ${parseInt(getFee)}
+                  ${feeValueCon}
                 </label>
               </div>
             )}
@@ -159,11 +160,7 @@ if(feeValue > 0 ) {
               <button
                 type="submit"
                 className="primary-button"
-                onClick={() => {
-                  subsWrite();
-                  subscribeToNotif();
-                  setIsOpen(false);
-                }}
+                onClick={() => subsWrite()}
               >
                 Confirm
               </button>
