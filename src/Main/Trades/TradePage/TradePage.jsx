@@ -5,10 +5,13 @@ import { useRef, useState } from "react";
 import Select from "react-select";
 import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
-import { data } from "../../../Utils/Data";
-import qs from "qs";
+import abi from "../../../Utils/erc20";
 import { contractABI, contractAddress } from "../../../Utils/constants";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useContractRead,
+} from "wagmi";
 
 import { utils } from "ethers";
 
@@ -26,6 +29,9 @@ const TradePage = () => {
   const [_tokenAmount, setTokenAmount] = useState(0);
   const [tp, setTp] = useState(0);
   const [sl, setSl] = useState(0);
+  const [tokenPrice, setTokenPrice] = useState("");
+  const [tokenInPrice, setTokenTnPrice] = useState(0);
+  const [tokenOutPrice, setTokenOutPrice] = useState(0);
 
   const { config: swapExact, error: swapError } = usePrepareContractWrite({
     abi: contractABI,
@@ -39,6 +45,21 @@ const TradePage = () => {
     address: contractAddress,
     functionName: "useTPandSL",
     args: [tp, sl, _tokenAmount, tokenSell.token_address, tokenBuy.address],
+  });
+
+  const { config: approve, error: approveError } = usePrepareContractWrite({
+    abi: abi,
+    address: tokenSell,
+    functionName: "approve",
+    args: [contractAddress, _tokenAmount],
+  });
+  const { writeAsync: approveF } = useContractWrite(approve);
+
+  const { data, isLoading } = useContractRead({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "getPrice",
+    args: [tokenPrice],
   });
   const { write: tpSL } = useContractWrite(config);
 
@@ -75,36 +96,6 @@ const TradePage = () => {
     setShowResult(true);
   };
   //End of web3 API call
-
-  const getQuote = async (
-    _tokenS,
-    _tokenB,
-    amount,
-    sellDecimal,
-    buyDecimal
-  ) => {
-    try {
-      const params = {
-        sellToken: _tokenS,
-        buyToken: _tokenB,
-        // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
-        sellAmount: amount * 10 ** sellDecimal,
-      };
-
-      const headers = { "0x-api-key": process.env.REACT_APP_OXAPI_KEY };
-      const response = await fetch(
-        `https://mumbai.api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-        { headers }
-      );
-      console.log(await response.json());
-      const result = await response.json();
-      setBuyAMount(result.buyAmount / 10 ** buyDecimal);
-      const _buyAmount = result.buyAmount / 10 ** buyDecimal;
-      return _buyAmount;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   //options in the Select from wallet data call to get tokens and balances
   const options1 = result.map((token) => {
@@ -170,6 +161,11 @@ const TradePage = () => {
   };
 
   useEffect(() => {
+    setTokenPrice(tokenSell.token_address);
+    setTokenTnPrice(data);
+    setTokenPrice(tokenBuy.address);
+    setTokenOutPrice(data);
+
     if (isConnected) {
       handleSubmit();
     }
@@ -185,13 +181,6 @@ const TradePage = () => {
             onChange={(e) => {
               tokenAmount = e.currentTarget.value;
               setTokenAmount(e.currentTarget.value);
-              getQuote(
-                tokenSell.token_address,
-                tokenBuy.address,
-                tokenAmount,
-                tokenSell.decimals,
-                tokenBuy.decimal
-              );
             }}
           />
           <div className="container">
@@ -210,7 +199,11 @@ const TradePage = () => {
           <AiOutlineSwap style={{ width: "2.5rem", height: "1.5rem" }} />
         </div>
         <div className="swap-2 swap-card">
-          <input type="text" placeholder="0" value={buyAmount} />
+          <input
+            type="text"
+            placeholder="0"
+            value={(tokenInPrice / tokenOutPrice) * _tokenAmount}
+          />
           <div className="container">
             <div className="custom-select mt-5 m-auto w-75">
               <Select
@@ -263,14 +256,14 @@ const TradePage = () => {
         {radio ? (
           <button
             className="btn btn-primary btn-lg top-btn"
-            onClick={() => tpSL?.()}
+            onClick={() => approveF(() => tpSL?.())}
           >
             Swap
           </button>
         ) : (
           <button
             className="btn btn-primary btn-lg top-btn"
-            onClick={() => write?.()}
+            onClick={() => approveF(() => write?.())}
           >
             Swap
           </button>

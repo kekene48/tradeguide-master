@@ -43,6 +43,7 @@ const Index = () => {
     functionName: "cancelUpkeepById",
     args: [data],
   });
+  console.log(data);
 
   const { write: cancel } = useContractWrite(config);
   const { write } = useContractWrite(addFunds);
@@ -72,7 +73,7 @@ const Index = () => {
         }}
       >
         <Sidebar />
-        {data != undefined ? (
+        {data == undefined ? (
           <div className="topTrade_main">
             <div className="trade_info">
               <div className="trade_info-icon">
@@ -111,7 +112,7 @@ const Index = () => {
             <div className="automation_info">
               <div className="automation_info-icon">
                 <h1>Upkeep ID</h1>
-                <p>13144222222222882891</p>
+                <p>12882891</p>
               </div>
               <div className="automation_info-icon">
                 <h1>Add Funds</h1>
@@ -134,7 +135,7 @@ const Index = () => {
               <div className="automation_info-icon">
                 <h1>Upkeep balance</h1>
                 <p>1313145</p>
-                <h3>Ether</h3>
+                <p>LINK</p>
               </div>
             </div>
           </div>
@@ -167,7 +168,9 @@ const Index = () => {
               </div>
               <div className="trade_info-icon">
                 <h1>timestamp</h1>
-                <p>{new Date(data.timestamp.toNumber() * 1000).toLocaleString()}</p>
+                <p>
+                  {new Date(data.timestamp.toNumber() * 1000).toLocaleString()}
+                </p>
               </div>
               <div className="trade_info-icon">
                 <h1>State</h1>
@@ -177,7 +180,7 @@ const Index = () => {
             <div className="automation_info">
               <div className="automation_info-icon">
                 <h1>Upkeep ID</h1>
-                <p></p>
+                <p>{data.upkeepID}</p>
               </div>
               <div className="automation_info-icon">
                 <h1>Add Funds</h1>
@@ -199,7 +202,7 @@ const Index = () => {
               </div>
               <div className="automation_info-icon">
                 <h1>Upkeep balance</h1>
-                <p>1313145</p>
+                <p>{upkeepInfo}</p>
                 <h3>Ether</h3>
               </div>
             </div>

@@ -34,6 +34,7 @@ const Profile = () => {
   const [noOfSubs, setNoOfSubs] = useState(13);
   const [subscribers, setSubscribers] = useState([]);
   const [url, setUrl] = useState("");
+  const [totalTrans, setTotalTrans] = useState(0)
 
   //Set Profile Image and Name
   const [name, setName] = useState("Andy Horwitz");
@@ -282,6 +283,7 @@ const Profile = () => {
   }, [id]);
   useEffect(() => {
     setUrl(data[0].result);
+    setTotalTrans(data[3].result)
     setNoOfPosts(data[4].result.length);
     setNoOfSubs(parseInt(data[2]?.result));
     setSubscribers(data[1]?.result);
@@ -658,29 +660,19 @@ const Profile = () => {
                     type="button"
                     className="btn btn-primary btn-rounded btn-lg"
                     style={{ borderRadius: ".5rem" }}
-                  >
-                    Message now
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-rounded btn-lg"
-                    style={{ borderRadius: ".5rem" }}
                     onClick={(e) => handleSubscribe(e)}
                   >
-                    Subscribe
+                    {id == address ? "setFee" : "Subscribe"}
                   </button>
                 </div>
                 <div className="d-flex justify-content-between text-center mt-5 mb-2 px-5">
-                  <div>
-                    <p className="mb-2 h5">8471</p>
-                    <p className="text-muted mb-0">Wallets Balance</p>
-                  </div>
+                 
                   <div className="px-3">
-                    <p className="mb-2 h5">8512</p>
-                    <p className="text-muted mb-0">Income amounts</p>
+                    <p className="mb-2 h5">45%</p>
+                    <p className="text-muted mb-0">Average P/L</p>
                   </div>
                   <div>
-                    <p className="mb-2 h5">4751</p>
+                    <p className="mb-2 h5">{totalTrans > 0 && totalTrans != undefined ? totalTrans : 30}</p>
                     <p className="text-muted mb-0">Total Transactions</p>
                   </div>
                 </div>
@@ -692,7 +684,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {subscribers.includes(address) ? <Feed id={id} /> : ""}
+      {subscribers.includes(address) || address == id? <Feed id={id} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} id={id} /> : ""}
     </>
   );
