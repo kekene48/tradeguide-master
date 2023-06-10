@@ -76,8 +76,28 @@ const Trades = () => {
               <th>Status</th>
             </tr>
           </thead>
+
+          {tradeData && (
+            <tbody>
+              {tradeData.reverse().map((trade) => (
+                <tr>
+                  <td>{trade.id}</td>
+                  <td>{trade.timestamp}</td>
+                  <td>
+                    <Link to={`/toptrades/${trade.id}`}>{trade.trader_id}</Link>
+                  </td>
+                  <td>{trade.token}</td>
+                  <td>{trade.buy_price}</td>
+                  <td>{trade.amount}</td>
+                  <td>{trade.sl_tp}</td>
+                  <td>{trade.pl}%</td>
+                  <td>{icons[completeOrNot()]}</td>
+                </tr>
+              ))}
+            </tbody>
+          )}
           <tbody>
-            {[...tradeData, ...trades].reverse().map((trade) => (
+            {trades.reverse().map((trade) => (
               <tr>
                 <td>{trade.id}</td>
                 <td>{trade.timestamp}</td>
