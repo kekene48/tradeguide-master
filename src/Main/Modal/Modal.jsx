@@ -14,7 +14,7 @@ import {
 const Modale = ({ isOpen, setIsOpen, id }) => {
   // Backdrop JSX code
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
-  const [feeValue, setfeeValue] = useState(0);
+  const [feeValue, setfeeValue] = useState();
   const [feeValueCon, setfeeValueCon] = useState(20);
 
   const { address } = useAccount();
@@ -23,8 +23,7 @@ const Modale = ({ isOpen, setIsOpen, id }) => {
     isError,
     isLoading: clientLoading,
   } = useWalletClient();
-  if (feeValue > 0) {
-  }
+  
   const { config: feeConfig, error } = usePrepareContractWrite({
     abi: contractABI,
     address: contractAddress,

@@ -45,7 +45,7 @@ const Feed = ({ id, url }) => {
   const _getPost = async () => {
     const postArray = [];
     const _posts = posts;
-    _posts.forEach(async (post) => {
+    _posts?.forEach(async (post) => {
       const res = await fetch(post);
       const result = await res.json();
       postArray.push(result);
