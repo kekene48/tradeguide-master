@@ -1,25 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Top from "./Top";
 import "./main.scss";
 import TradePage from "./Trades/TradePage/TradePage";
 import Loader from "./Loader/Loading";
-import { useAccount } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
 import { AiOutlineDash } from "react-icons/ai";
 import { trades } from "../Utils/Data";
 import { Link } from "react-router-dom";
+import { contractABI, contractAddress } from "../Utils/constants";
 
 const Main = () => {
   const { isConnecting, isDisconnected } = useAccount();
+  const [tradeData, setTradeData] = useState([]);
   const completeOrNot = () => {
     return Math.round(Math.random());
   };
+  const {
+    data: tradesData,
+    isLoading: tradeDataLoading,
+    error: tradesDataError,
+  } = useContractRead({
+    abi: contractABI,
+    address: contractAddress,
+    functionName: "getTrades",
+  });
+  const structuredTradeData = tradesData?.map((trade) => ({
+    timestamp: new Date(trade.timestamp.toNumber() * 1000).toLocaleString(),
+    trader_id: trade.trader,
+    token: trade.tokenBought,
+    buy_price: trade.buyPrice,
+    id: trade.index,
+    sl_tp: `${trade.sl.toString()} / ${trade.tp.toString()}`,
+    state: trade._tradeState,
+    amount: trade.amount,
+    upkeepId: trade.upkeepID,
+  }));
+  //console.log(tradesData);
 
   //if user disconnects, this takes them back to home page
   const navigate = useNavigate();
   useEffect(() => {
+    setTradeData(structuredTradeData);
     if (isDisconnected) {
       navigate("/");
     }
@@ -59,14 +83,36 @@ const Main = () => {
             <th>Status</th>
           </tr>
         </thead>
+        {tradeData && (
+          <tbody>
+            {tradeData
+              .splice(tradeData.length - 11, tradeData.length - 1)
+              .reverse()
+              .map((trade) => (
+                <tr>
+                  <td>{trade.id}</td>
+                  <td>{trade.timestamp}</td>
+                  <td>
+                    <Link to={`/toptrades/${trade.id}`}>{trade.trader_id}</Link>
+                  </td>
+                  <td>{trade.token}</td>
+                  <td>{trade.buy_price}</td>
+                  <td>{trade.amount}</td>
+                  <td>{trade.sl_tp}</td>
+                  <td>{trade.pl}%</td>
+                  <td>{icons[completeOrNot()]}</td>
+                </tr>
+              ))}
+          </tbody>
+        )}
         <tbody>
-          {trades.map((trade) => (
+          {trades.reverse().map((trade) => (
             <tr>
               <td>{trade.id}</td>
               <td>{trade.timestamp}</td>
-              <Link to={`/toptrades?${trade.id}-9InrNkZropk`}>
-                <td>{trade.trader_id}</td>
-              </Link>
+              <td>
+                <Link to={`/toptrades/${trade.id}`}>{trade.trader_id}</Link>
+              </td>
               <td>{trade.token}</td>
               <td>{trade.buy_price}</td>
               <td>{trade.amount}</td>
