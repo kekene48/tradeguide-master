@@ -31,8 +31,13 @@ function Home() {
           <div className="app__motto">
             <div className="app__motto-lg">Trade Guide</div>
             <div className="app__motto-sm">
-              we provide a list of trades, you decide which to set up your trade
-              as
+              <h3 style={{ marginTop: "10px", marginBottom: "10px" }}>A socio-trading Dapp </h3>
+              <p style={{fontSize: "15px"}}>
+                Perform analysis using our database and trading tools{" "}
+              </p>
+              <p style={{fontSize: "15px"}}>Execute
+                Trades</p>
+                <p style={{fontSize: "15px"}}>Build your reputation as a trader</p>
             </div>
           </div>
           <Link to="" className="app__btn">
