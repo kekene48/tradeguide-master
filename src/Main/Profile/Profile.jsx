@@ -284,7 +284,7 @@ const Profile = () => {
   useEffect(() => {
     setUrl(data[0].result);
     setTotalTrans(data[3].result)
-    setNoOfPosts(data[4].result.length);
+    setNoOfPosts(data[4].result?.length);
     setNoOfSubs(parseInt(data[2]?.result));
     setSubscribers(data[1]?.result);
     if (isDisconnected) {
@@ -684,7 +684,7 @@ const Profile = () => {
         </div>
         {/* PROFILE ENDS HERE */}
       </div>
-      {subscribers.includes(address) || address == id? <Feed id={id} /> : ""}
+      {subscribers?.includes(address) || address == id? <Feed id={id} /> : ""}
       {isOpen ? <Modale isOpen={isOpen} setIsOpen={setIsOpen} id={id} /> : ""}
     </>
   );

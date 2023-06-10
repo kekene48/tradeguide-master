@@ -133,7 +133,7 @@ const TradePage = () => {
     console.log(`Option selected:`, selectedOption.value);
   };
 
-  const options2 = data.map((token) => {
+  const options2 = data?.map((token) => {
     //setTokenBuy(token);
     return {
       value: token,
