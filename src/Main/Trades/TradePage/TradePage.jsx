@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import Select from "react-select";
 import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
-import abi from "../../../Utils/erc20";
+import {abi} from "../../../Utils/erc20";
 import { contractABI, contractAddress } from "../../../Utils/constants";
 import {
   useContractWrite,
