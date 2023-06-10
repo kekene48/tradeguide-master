@@ -10,7 +10,7 @@ Both experienced and inexperienced traders can use this app, experienced traders
 
 We have a large array of trading logs that each subscribed user can see and use to study market trends.
 
-# Smart Contract     -------------    https://github.com/rolic-hub/tradeguide-smart-contract
+## Smart Contract     -------------    https://github.com/rolic-hub/tradeguide-smart-contract
 
 ## Technologies used:
 ## Frontend framework - React
