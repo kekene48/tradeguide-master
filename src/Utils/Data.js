@@ -1,4 +1,4 @@
-export const data = [
+export const dataSelect = [
   {
     logo: "https://cryptologos.cc/logos/polygon-matic-logo.png",
     name: "WMATIC",

@@ -80,7 +80,7 @@ const Main = () => {
             <th>Amount</th>
             <th>SL/TP</th>
             <th>P / L (%)</th>
-            <th>Status</th>
+           
           </tr>
         </thead>
         {tradeData && (
@@ -118,7 +118,7 @@ const Main = () => {
               <td>{trade.amount}</td>
               <td>{trade.sl_tp}</td>
               <td>{trade.pl}%</td>
-              <td>{icons[completeOrNot()]}</td>
+             
             </tr>
           ))}
         </tbody>

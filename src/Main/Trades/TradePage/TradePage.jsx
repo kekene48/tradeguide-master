@@ -5,15 +5,32 @@ import { useRef, useState } from "react";
 import Select from "react-select";
 import { useAccount, useNetwork } from "wagmi";
 import Moralis from "moralis";
-import {abi} from "../../../Utils/erc20";
+import { abi } from "../../../Utils/erc20";
 import { contractABI, contractAddress } from "../../../Utils/constants";
 import {
   useContractWrite,
   usePrepareContractWrite,
   useContractRead,
 } from "wagmi";
+import { Polybase } from "@polybase/client";
+import { ethPersonalSignRecoverPublicKey } from "@polybase/eth";
+import { Auth } from "@polybase/auth";
+import { ethers } from "ethers";
+import { dataSelect } from "../../../Utils/Data";
 
-import { utils } from "ethers";
+const auth = new Auth();
+
+const db = new Polybase({
+  defaultNamespace:
+    "pk/0xeaff3acda3168f34b902292254edec6ef11cd57e7626fd9215ef88af76f1422fcd87f1977522d8518a7d5fe75981982f20f48eee8604a12d5806752bcb4e1780/TradeBuddy",
+});
+
+async function getPublicKey() {
+  const msg = "Login with Chat";
+  const sig = await auth.ethPersonalSign(msg);
+  const publicKey = ethPersonalSignRecoverPublicKey(sig, msg);
+  return "0x" + publicKey.slice(4);
+}
 
 const TradePage = () => {
   const { isConnected, address } = useAccount();
@@ -21,17 +38,17 @@ const TradePage = () => {
   const [showResult, setShowResult] = useState(false);
   const [start, setStart] = useState(true);
   const [result, setResult] = useState([]);
-  const [selectedValue1, setSelectedValue1] = useState(3);
-  const [selectedValue2, setSelectedValue2] = useState(3);
   const [buyAmount, setBuyAMount] = useState(0);
   const [tokenSell, setTokenSell] = useState({});
   const [tokenBuy, setTokenBuy] = useState({});
   const [_tokenAmount, setTokenAmount] = useState(0);
   const [tp, setTp] = useState(0);
   const [sl, setSl] = useState(0);
+  const [isPublickey, setIsPublickey] = useState("");
   const [tokenPrice, setTokenPrice] = useState("");
   const [tokenInPrice, setTokenTnPrice] = useState(0);
   const [tokenOutPrice, setTokenOutPrice] = useState(0);
+  const [tradeId, setTradeId] = useState("");
 
   const { config: swapExact, error: swapError } = usePrepareContractWrite({
     abi: contractABI,
@@ -44,7 +61,7 @@ const TradePage = () => {
     abi: contractABI,
     address: contractAddress,
     functionName: "useTPandSL",
-    args: [tp, sl, _tokenAmount, tokenSell.token_address, tokenBuy.address],
+    args: [tp, sl, _tokenAmount, tokenSell.token_address, tokenBuy.address, tradeId],
   });
 
   const { config: approve, error: approveError } = usePrepareContractWrite({
@@ -67,6 +84,43 @@ const TradePage = () => {
   let targetValue2 = useRef("USDT");
   const [radio, setRadio] = useState(false);
 
+  const addTrade = async () => {
+    try {
+      const timestamp = new Date.now();
+      const id = ethers.utils.keccak256(timestamp, tp, sl, tokenBuy.address);
+      setTradeId(id);
+      const _tokenAmountOut = (tokenInPrice / tokenOutPrice) * _tokenAmount;
+      const recordTrade = await db
+        .collection("TradeLog")
+        .create([
+          id.toString(),
+          tp,
+          sl,
+          db.collection("User").record(isPublickey),
+          tokenOutPrice,
+          tokenBuy.address,
+          _tokenAmountOut,
+          timestamp,
+        ]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createUser = async () => {
+    try {
+      const publicKey = await getPublicKey();
+      setIsPublickey(publicKey);
+      const user = await db.collection("User").record(isPublickey).get();
+      console.log("User", user);
+    } catch (e) {
+      console.log(e);
+      const user = await db.collection("User").create([address, address]);
+      console.log("User", user);
+      console.log(e);
+    }
+  };
+
   //web3 API call to get the wallet balance and list of tokens available
 
   const moralis = async () => {
@@ -88,7 +142,7 @@ const TradePage = () => {
 
     const response = await Moralis.EvmApi.token.getWalletTokenBalances({
       address: address,
-      chain: utils.hexValue(chain.id),
+      chain: ethers.utils.hexValue(chain.id),
     });
 
     // console.log(response.toJSON());
@@ -133,7 +187,7 @@ const TradePage = () => {
     console.log(`Option selected:`, selectedOption.value);
   };
 
-  const options2 = data?.map((token) => {
+  const options2 = dataSelect?.map((token) => {
     //setTokenBuy(token);
     return {
       value: token,
@@ -161,6 +215,7 @@ const TradePage = () => {
   };
 
   useEffect(() => {
+    createUser();
     setTokenPrice(tokenSell.token_address);
     setTokenTnPrice(data);
     setTokenPrice(tokenBuy.address);

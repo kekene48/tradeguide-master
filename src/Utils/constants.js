@@ -1,4 +1,4 @@
-import details from "./tradeGuideABI.json";
+import details from "./tradeABI.json";
 
 export const contractABI = details.abi;
 export const contractAddress = details.address;

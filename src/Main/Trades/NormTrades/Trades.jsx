@@ -8,12 +8,26 @@ import { contractABI, contractAddress } from "../../../Utils/constants";
 import { trades } from "../../../Utils/Data";
 import { useAccount, useContractRead } from "wagmi";
 import { useNavigate, Link } from "react-router-dom";
+import { Polybase } from "@polybase/client";
+import {useCollection} from "@polybase/react"
+
+const db = new Polybase({
+  defaultNamespace: "pk/0xeaff3acda3168f34b902292254edec6ef11cd57e7626fd9215ef88af76f1422fcd87f1977522d8518a7d5fe75981982f20f48eee8604a12d5806752bcb4e1780/TradeBuddy",
+});
+
 
 const Trades = () => {
+  
+
   const [tradeData, setTradeData] = useState([]);
   const completeOrNot = () => {
     return Math.round(Math.random());
   };
+
+  const query = db.collection("TradeLog");
+  const { data: tradedata, error, loading } = useCollection(query);
+  console.log(tradedata?.data);
+ // const Data = tradedata?.data;
   // const calculatepl = () => {
 
   // }
@@ -40,6 +54,7 @@ const Trades = () => {
   }));
   console.log(tradesData);
   //console.log(structuredTradeData)
+
 
   const icons = [
     <AiOutlineDash style={{ fontSize: "1.5rem" }} />,
@@ -73,7 +88,7 @@ const Trades = () => {
               <th>Amount</th>
               <th>SL/TP</th>
               <th>P / L (%)</th>
-              <th>Status</th>
+             
             </tr>
           </thead>
 
@@ -91,7 +106,6 @@ const Trades = () => {
                   <td>{trade.amount}</td>
                   <td>{trade.sl_tp}</td>
                   <td>{trade.pl}%</td>
-                  <td>{icons[completeOrNot()]}</td>
                 </tr>
               ))}
             </tbody>

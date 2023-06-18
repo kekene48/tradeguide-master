@@ -1,11 +1,7 @@
 import "./home.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { FcCheckmark } from "react-icons/fc";
-import ChainLink from "../assets/Chainlink-logo.png";
-import AWS from "../assets/AWS.svg";
-import Flow from "../assets/Flow.svg";
-import QuickNode from "../assets/QuickNode.svg";
-import SpaceAndTime from "../assets/SpaceAndTime.png";
+
 import Cover from "../assets/cover.png";
 import "../bootstrap.min.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -29,7 +25,8 @@ function Home() {
             <img src={Cover} alt="TradeGuide" style={{ width: "25rem" }} />
           </div>
           <div className="app__motto">
-            <div className="app__motto-lg">Trade Guide</div>
+            <div className="app__motto-lg">Trade-Xp</div>
+            <p> For the best Trading Experience</p>
             <div className="app__motto-sm">
               <h3 style={{ marginTop: "10px", marginBottom: "10px" }}>A socio-trading Dapp </h3>
               <p style={{fontSize: "15px"}}>
@@ -64,37 +61,7 @@ function Home() {
           </div>
         </main>
 
-        {/* SPONSORS */}
-        <section className="sponsors">
-          <div className="sponsors-img">
-            <img
-              src={ChainLink}
-              alt="chainlink logo"
-              className="sponsors-img-chainlink"
-            />
-            <img
-              src={AWS}
-              alt="chainlink logo"
-              className="sponsors-img-chainlink"
-            />
-            <img
-              src={QuickNode}
-              alt="chainlink logo"
-              className="sponsors-img-chainlink"
-            />
-            <img
-              src={SpaceAndTime}
-              alt="chainlink logo"
-              className="sponsors-img-chainlink"
-            />
-            <img
-              src={Flow}
-              alt="chainlink logo"
-              className="sponsors-img-chainlink"
-            />
-          </div>
-        </section>
-
+       
         {/* CARDS */}
         <section className="about">
           <div className="about__card about__card-1">

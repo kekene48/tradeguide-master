@@ -14,8 +14,8 @@ const Top = () => {
       >
         <img
           src={Logo}
-          alt="TradeGuide"
-          style={{ width: "20rem", marginTop: "1rem" }}
+          alt="TradeXp"
+          style={{ width: "15rem", height: "9rem" }}
         />
       </Link>
       <div style={{}}>

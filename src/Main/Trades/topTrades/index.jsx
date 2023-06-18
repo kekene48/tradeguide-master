@@ -12,43 +12,56 @@ import {
   usePrepareContractWrite,
 } from "wagmi";
 import { contractABI, contractAddress } from "../../../Utils/constants";
+import { useCollection } from "@polybase/react";
+import { Polybase } from "@polybase/client";
 //import { readContract } from "viem/dist/types/actions/public/readContract";
+
+const db = new Polybase({
+  defaultNamespace:
+    "pk/0xeaff3acda3168f34b902292254edec6ef11cd57e7626fd9215ef88af76f1422fcd87f1977522d8518a7d5fe75981982f20f48eee8604a12d5806752bcb4e1780/TradeBuddy",
+});
 
 const Index = () => {
   const { index } = useParams();
   const [addToUpkeep, setAddToUpkeep] = useState(0);
   const [pageData, setPageData] = useState({});
   const [_upkeepInfo, setUpkeepInfo] = useState({});
+  const [userAddress, setUserAddress] = useState("");
   const readContract = {
     abi: contractABI,
     address: contractAddress,
   };
-  const { data, error } = useContractRead({
-    ...readContract,
-    functionName: "getATrade",
-    args: [index],
-  });
+
+  const query = db.collection("TradeLog").record(index.toString());
+  const { data: tradedata, error, loading } = useCollection(query);
+  console.log(tradedata?.data);
+
   const { data: upkeepInfo, error: upkeepError } = useContractRead({
     ...readContract,
     functionName: "getUpkeepInfo",
-    args: [data],
+    args: [index],
   });
   const { config: addFunds, error: addFundsError } = usePrepareContractWrite({
     ...readContract,
     functionName: "addFundsByID",
-    args: [data, addToUpkeep],
+    args: [index, addToUpkeep],
   });
   const { config, error: cancelError } = usePrepareContractWrite({
     ...readContract,
     functionName: "cancelUpkeepById",
-    args: [data],
+    args: [index],
   });
-  console.log(data);
+  console.log(upkeepInfo);
 
   const { write: cancel } = useContractWrite(config);
   const { write } = useContractWrite(addFunds);
   const completeOrNot = () => {
     return Math.round(Math.random());
+  };
+
+  const getAddress = async (userId) => {
+    const _getAddress = await db.collection("User").record(userId).get();
+    setUserAddress(_getAddress.data.address);
   };
 
   const icons = [
@@ -57,7 +70,8 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    setPageData(data);
+    setPageData(tradedata?.data);
+    getAddress(tradedata?.data.trader_id.id);
     setUpkeepInfo(upkeepInfo);
   }, []);
 
@@ -73,7 +87,7 @@ const Index = () => {
         }}
       >
         <Sidebar />
-        {data == undefined ? (
+        {pageData == undefined ? (
           <div className="topTrade_main">
             <div className="trade_info">
               <div className="trade_info-icon">
@@ -144,19 +158,19 @@ const Index = () => {
             <div className="trade_info">
               <div className="trade_info-icon">
                 <h1>Token</h1>
-                <p>{data.tokenBought}</p>
+                <p>{pageData.token}</p>
               </div>
               <div className="trade_info-icon">
                 <h1>Price</h1>
-                <p>{data.buyPrice}</p>
+                <p>{pageData.buyPrice}</p>
               </div>
               <div className="trade_info-icon">
                 <h1>SL</h1>
-                <p>{data.sl}</p>
+                <p>{pageData.sl}</p>
               </div>
               <div className="trade_info-icon">
                 <h1>TP</h1>
-                <p>{data.tp}</p>
+                <p>{pageData.tp}</p>
               </div>
               <div className="trade_info-icon">
                 <h1>P/L</h1>
@@ -164,23 +178,25 @@ const Index = () => {
               </div>
               <div className="trade_info-icon">
                 <h1>Amount</h1>
-                <p>{data.amount}</p>
+                <p>{pageData.amount}</p>
               </div>
               <div className="trade_info-icon">
                 <h1>timestamp</h1>
                 <p>
-                  {new Date(data.timestamp.toNumber() * 1000).toLocaleString()}
+                  {new Date(
+                    pageData.timestamp.toNumber() * 1000
+                  ).toLocaleString()}
                 </p>
               </div>
               <div className="trade_info-icon">
                 <h1>State</h1>
-                <p>{icons[data._tradeState]}</p>
+                <p>{icons[pageData.state]}</p>
               </div>
             </div>
             <div className="automation_info">
               <div className="automation_info-icon">
                 <h1>Upkeep ID</h1>
-                <p>{data.upkeepID}</p>
+                <p>{pageData.upKeepId}</p>
               </div>
               <div className="automation_info-icon">
                 <h1>Add Funds</h1>
